@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geldwegwijzer/MoneyGrid.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,13 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Betalen',
+      'Te betalen bedrag',
       style: optionStyle,
     ),
-    Text(
-      'Geld toevoegen',
-      style: optionStyle,
-    ),
+    MoneyGrid(),
   ];
 
   void _onItemTapped(int index) {
@@ -83,3 +81,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
