@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'De Geldwegwijzer'),
+      home: MyHomePage(title: 'Geldwegwijzer'),
     );
   }
 }
@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('De Geldwegwijzer'),
+        title: const Text('Geldwegwijzer'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
