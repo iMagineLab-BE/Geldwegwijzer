@@ -38,8 +38,23 @@ class MoneyGrid extends StatelessWidget {
     print("");
   }
 
-  void getCurrentMoney(){
-    //TODO
+  Map getCurrentMoney() {
+    var money = new Map<String, int>();
+    money["1_cent"] = n_1_cent;
+    money["2_cent"] = n_2_cent;
+    money["5_cent"] = n_5_cent;
+    money["10_cent"] = n_10_cent;
+    money["20_cent"] = n_20_cent;
+    money["50_cent"] = n_50_cent;
+    money["1_euro"] = n_1_euro;
+    money["2_euro"] = n_2_euro;
+    money["5_euro"] = n_5_euro;
+    money["10_euro"] = n_10_euro;
+    money["20_euro"] = n_20_euro;
+    money["50_euro"] = n_50_euro;
+    money["100_euro"] = n_100_euro;
+
+    return money;
   }
 
 
