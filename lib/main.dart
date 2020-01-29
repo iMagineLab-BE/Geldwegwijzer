@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geldwegwijzer/MoneyGrid.dart';
+import 'package:geldwegwijzer/Paying.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,10 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Te betalen bedrag',
-      style: optionStyle,
-    ),
+    PayingInput(),
     MoneyGrid(),
   ];
 
