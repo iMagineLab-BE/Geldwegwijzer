@@ -1,55 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class PayingInput extends StatelessWidget {
-  const PayingInput() : super();
+class Paying extends StatefulWidget {
+  const Paying() : super();
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          TextField(
-            textAlign: TextAlign.center,
-            keyboardType:
-                TextInputType.numberWithOptions(decimal: true, signed: false),
-            autofocus: true,
-            decoration: InputDecoration(hintText: "Vul hier de prijs in."),
-            inputFormatters: <TextInputFormatter>[
-              DecimalTextInputFormatter(decimalRange: 2)
-            ],
-          ),
-          RaisedButton(
-            onPressed: () {
-              _goToPayingOutput(context);
-            },
-            textColor: Colors.white,
-            color: Colors.blueAccent,
-            padding: const EdgeInsets.all(0.0),
-            child: const Text('Betalen', style: TextStyle(fontSize: 20)),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future _goToPayingOutput(context) async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PayingOutput()));
-  }
+  State<StatefulWidget> createState() => PayingState();
 }
 
-class PayingOutput extends StatelessWidget {
+class PayingState extends State {
+  var mode = true;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Geldwegwijzer'),
+    if (mode) {
+      return Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              textAlign: TextAlign.center,
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: false),
+              autofocus: true,
+              decoration: InputDecoration(hintText: "Vul hier de prijs in."),
+              inputFormatters: <TextInputFormatter>[
+                DecimalTextInputFormatter(decimalRange: 2)
+              ],
+            ),
+            RaisedButton(
+              onPressed: () {
+                switchScreen();
+              },
+              textColor: Colors.white,
+              color: Colors.blueAccent,
+              padding: const EdgeInsets.all(0.0),
+              child: const Text('Betalen', style: TextStyle(fontSize: 20)),
+            ),
+          ],
         ),
-        body: Center(
-          child: Text('test'),
-        ));
+      );
+    } else {
+      return Scaffold(
+          body: Center(
+        child: Text('test'),
+      ));
+    }
+  }
+
+  void switchScreen() {
+    setState(() {
+      mode = !mode;
+    });
   }
 }
 

@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static const List<Widget> _widgetOptions = <Widget>[
-    PayingInput(),
+    Paying(),
     MoneyGrid(),
   ];
 
