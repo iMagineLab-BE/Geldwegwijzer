@@ -64,11 +64,11 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.monetization_on),
+            icon: Icon(Icons.payment),
             title: Text('Betalen'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.attach_money),
+            icon: Icon(Icons.euro_symbol),
             title: Text('Geld toevoegen'),
           ),
         ],
