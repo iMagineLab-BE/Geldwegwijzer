@@ -39,7 +39,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle topStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle bottomStyle =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.normal);
 
   static const List<Widget> _widgetOptions = <Widget>[
     Paying(),
@@ -56,7 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Geldwegwijzer'),
+        title: const Text(
+          'Geldwegwijzer',
+          style: topStyle,
+        ),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -64,12 +70,12 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.payment),
-            title: Text('Betalen'),
+            icon: Icon(Icons.payment, size: 30),
+            title: Text('Betalen', style: bottomStyle),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.euro_symbol),
-            title: Text('Geld toevoegen'),
+            icon: Icon(Icons.euro_symbol, size: 30),
+            title: Text('Geld toevoegen', style: bottomStyle),
           ),
         ],
         currentIndex: _selectedIndex,
@@ -79,5 +85,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-

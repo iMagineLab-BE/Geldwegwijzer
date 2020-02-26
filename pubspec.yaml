@@ -43,21 +43,19 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    #- assets/
-   - assets/euros/onecent.png
-   - assets/euros/twocents.png
-   - assets/euros/fivecents.png
-   - assets/euros/tencents.png
-   - assets/euros/twentycents.png
-   - assets/euros/fiftycents.png
-   - assets/euros/oneeuro.png
-   - assets/euros/twoeuros.png
-   - assets/euros/fiveeuros.png
-   - assets/euros/teneuros.png
-   - assets/euros/twentyeuros.png
-   - assets/euros/fiftyeuros.png
-   - assets/euros/hundredeuros.png
-#   - assets/euros/twohundredeuros.png
-#   - assets/euros/fivehundredeuros.png
+   - assets/euros/n1Cent.png
+   - assets/euros/n2Cent.png
+   - assets/euros/n5Cent.png
+   - assets/euros/n10Cent.png
+   - assets/euros/n20Cent.png
+   - assets/euros/n50Cent.png
+   - assets/euros/n1Euro.png
+   - assets/euros/n2Euro.png
+   - assets/euros/n5Euro.png
+   - assets/euros/n10Euro.png
+   - assets/euros/n20Euro.png
+   - assets/euros/n50Euro.png
+   - assets/euros/n100Euro.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

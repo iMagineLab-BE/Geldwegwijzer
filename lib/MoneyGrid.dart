@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geldwegwijzer/AppData.dart';
 
@@ -8,60 +9,78 @@ class MoneyGrid extends StatefulWidget {
   State<StatefulWidget> createState() => MoneyGridState();
 }
 
+coinToValue(Coin coin) {
+  switch (coin) {
+    case Coin.n5Cent:
+      return "5";
+    case Coin.n10Cent:
+      return "10";
+    case Coin.n20Cent:
+      return "20";
+    case Coin.n50Cent:
+      return "50";
+    case Coin.n1Euro:
+      return "100";
+    case Coin.n2Euro:
+      return "200";
+    case Coin.n10Euro:
+      return "1000";
+    case Coin.n20Euro:
+      return "2000";
+    case Coin.n50Euro:
+      return "50000";
+    case Coin.n100Euro:
+      return "100000";
+    default:
+      return "0";
+  }
+}
+
 class MoneyGridState extends State {
-  //int n_1_cent = 0;
-//int n_2_cent = 0;
-  int n_5_cent = 0;
-  int n_10_cent = 0;
-  int n_20_cent = 0;
-  int n_50_cent = 0;
-  int n_1_euro = 0;
-  int n_2_euro = 0;
-  int n_5_euro = 0;
-  int n_10_euro = 0;
-  int n_20_euro = 0;
-  int n_50_euro = 0;
-  int n_100_euro = 0;
 
   Function(String) onSelectParam;
 
-  void printCurrentMoney() {
-    print("CURRENT MONEY:");
-//    print("${n_1_cent} x 1 cent");
-//    print("${n_2_cent} x 2 cent");
-    print("${n_5_cent} x 5 cent");
-    print("${n_10_cent} x 10 cent");
-    print("${n_20_cent} x 20 cent");
-    print("${n_50_cent} x 20 cent");
-    print("${n_1_euro} x 10 euro");
-    print("${n_2_euro} x 2 euro");
-    print("${n_5_euro} x 5 euro");
-    print("${n_10_euro} x 10 euro");
-    print("${n_20_euro} x 20 euro");
-    print("${n_50_euro} x 50 euro");
-    print("${n_100_euro} x 100 euro");
-    print("");
+  List<Widget> getCoinsMenu() {
+    var widgets = new List<Widget>();
+    Coin.values.forEach((coin) {
+      widgets.addAll([
+        IconButton(
+          icon: Icon(Icons.remove_circle_outline),
+          iconSize: 50,
+          tooltip: 'Verwijder 1',
+          onPressed: () {
+            setState(() {
+              appData.decreaseCoin(coin);
+            });
+          },
+        ),
+        Align(
+            alignment: Alignment.center,
+            child: Text(
+              '${appData.currentMoney[describeEnum(coin)]} x ',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+            )),
+        Image(
+          image: AssetImage('assets/euros/${describeEnum(coin)}.png'),
+          fit: BoxFit.fitWidth,
+          // todo 1: use coins of the same resolution, some are blurry
+          // todo 2: instant image loading, tip: precacheImage function
+        ),
+        IconButton(
+          icon: Icon(Icons.add_circle_outline),
+          iconSize: 50,
+          tooltip: 'Voeg 1 toe',
+          onPressed: () {
+            setState(() {
+              appData.increaseCoin(coin);
+            });
+          },
+        )
+      ]);
+    });
+    return widgets;
   }
-
-  Map getCurrentMoney() {
-    var money = new Map<String, int>();
-//    money["1_cent"] = n_1_cent;
-//    money["2_cent"] = n_2_cent;
-    money["5_cent"] = n_5_cent;
-    money["10_cent"] = n_10_cent;
-    money["20_cent"] = n_20_cent;
-    money["50_cent"] = n_50_cent;
-    money["1_euro"] = n_1_euro;
-    money["2_euro"] = n_2_euro;
-    money["5_euro"] = n_5_euro;
-    money["10_euro"] = n_10_euro;
-    money["20_euro"] = n_20_euro;
-    money["50_euro"] = n_50_euro;
-    money["100_euro"] = n_100_euro;
-
-    return money;
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -72,366 +91,7 @@ class MoneyGridState extends State {
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       crossAxisCount: 4,
-      children: <Widget>[
-//            IconButton(
-//              icon: Icon(Icons.remove_circle_outline),
-//              tooltip: 'Verwijder 1',
-//              onPressed: () {
-//                  n_1_cent--;
-//                  printCurrentMoney();
-//              },
-//            ),
-//            Image(image: AssetImage('assets/euros/onecent.png')),
-//            IconButton(
-//              icon: Icon(Icons.add_circle_outline),
-//              tooltip: 'Voeg 1 toe',
-//              onPressed: () {
-//                n_1_cent++;
-//                printCurrentMoney();
-//              },
-//            ),
-//            IconButton(
-//              icon: Icon(Icons.remove_circle_outline),
-//              tooltip: 'Verwijder 1',
-//              onPressed: () {
-//                n_2_cent--;
-//                printCurrentMoney();
-//              },
-//            ),
-//            Image(image: AssetImage('assets/euros/twocents.png')),
-//            IconButton(
-//              icon: Icon(Icons.add_circle_outline),
-//              tooltip: 'Voeg 1 toe',
-//              onPressed: () {
-//                n_2_cent++;
-//                printCurrentMoney();
-//              },
-//            ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_5_cent--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_5_cent x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-        )),
-        Image(image: AssetImage('assets/euros/fivecents.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_5_cent++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_10_cent--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_10_cent x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/tencents.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_10_cent++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_20_cent--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_20_cent x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/twentycents.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_20_cent++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_50_cent--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_50_cent x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/fiftycents.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_50_cent++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_1_euro--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_1_euro x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/oneeuro.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_1_euro++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_2_euro--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_2_euro x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/twoeuros.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_2_euro++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_5_euro--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_5_euro x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/fiveeuros.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_5_euro++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_10_euro--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_10_euro x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/teneuros.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_10_euro++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_20_euro--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_20_euro x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/twentyeuros.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_20_euro++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_50_euro--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_50_euro x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/fiftyeuros.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_50_euro++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle_outline, size: 50,),
-          tooltip: 'Verwijder 1',
-          onPressed: (){
-            setState(() {n_100_euro--;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              '$n_100_euro x ',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            )),
-        Image(image: AssetImage('assets/euros/hundredeuros.png')),
-        IconButton(
-          icon: Icon(Icons.add_circle_outline, size: 50,),
-          tooltip: 'Voeg 1 toe',
-          onPressed: (){
-            setState(() {n_100_euro++;});
-            printCurrentMoney();
-            appData.currentMoney = getCurrentMoney();
-          },
-        ),
-//            IconButton(
-//              icon: Icon(Icons.remove_circle_outline),
-//              tooltip: 'Verwijder 1',
-//              onPressed: () {
-//                n_1_cent--;
-//              },
-//            ),
-//            Container(
-//              padding: const EdgeInsets.all(8),
-//              child: const Text('200 euro'),
-//              color: Colors.teal[500],
-//            ),
-//            IconButton(
-//              icon: Icon(Icons.add_circle_outline),
-//              tooltip: 'Voeg 1 toe',
-//              onPressed: () {
-//                n_1_cent++;
-//              },
-//            ),
-//            IconButton(
-//              icon: Icon(Icons.remove_circle_outline),
-//              tooltip: 'Verwijder 1',
-//              onPressed: () {
-//                n_1_cent--;
-//              },
-//            ),
-//            Container(
-//              padding: const EdgeInsets.all(8),
-//              child: const Text('500 euro'),
-//              color: Colors.teal[500],
-//            ),
-//            IconButton(
-//              icon: Icon(Icons.add_circle_outline),
-//              tooltip: 'Voeg 1 toe',
-//              onPressed: () {
-//                n_1_cent++;
-//              },
-//            ),
-      ],
+      children: getCoinsMenu(),
     ));
   }
 }
