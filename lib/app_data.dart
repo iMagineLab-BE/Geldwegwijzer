@@ -14,10 +14,47 @@ enum Coin {
   n100Euro,
 }
 
+int coinToValue(Coin coin) {
+  switch (coin) {
+    case Coin.n5Cent:
+      return 5;
+    case Coin.n10Cent:
+      return 10;
+    case Coin.n20Cent:
+      return 20;
+    case Coin.n50Cent:
+      return 50;
+    case Coin.n1Euro:
+      return 100;
+    case Coin.n2Euro:
+      return 200;
+    case Coin.n5Euro:
+      return 500;
+    case Coin.n10Euro:
+      return 1000;
+    case Coin.n20Euro:
+      return 2000;
+    case Coin.n50Euro:
+      return 50000;
+    case Coin.n100Euro:
+      return 100000;
+    default:
+      return 0;
+  }
+}
+
+void printMoney(Map money) {
+  print("MONEY OVERVIEW:");
+  money.forEach((key, value) {
+    print("$value x $key");
+  });
+}
+
 class AppData {
   static final AppData _appData = new AppData._internal();
 
-  Map currentMoney = initMoney();
+  Map<String, int> currentMoney = initMoney();
+  Map<String, int> splitMoney = initMoney();
 
   static Map<String, int> initMoney() {
     var money = new Map<String, int>();
@@ -41,13 +78,6 @@ class AppData {
     currentMoney[describeEnum(coin)]--;
     print("Coin type: ${describeEnum(coin)}, "
         "decreased to amount: ${currentMoney[describeEnum(coin)]}");
-  }
-
-  void printCurrentMoney() {
-    print("CURRENT MONEY:");
-    currentMoney.forEach((key, value) {
-      print("$value x $key");
-    });
   }
 
   factory AppData() {

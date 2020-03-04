@@ -9,35 +9,6 @@ class MoneyGrid extends StatefulWidget {
   State<StatefulWidget> createState() => MoneyGridState();
 }
 
-coinToValue(Coin coin) {
-  switch (coin) {
-    case Coin.n5Cent:
-      return "5";
-    case Coin.n10Cent:
-      return "10";
-    case Coin.n20Cent:
-      return "20";
-    case Coin.n50Cent:
-      return "50";
-    case Coin.n1Euro:
-      return "100";
-    case Coin.n2Euro:
-      return "200";
-    case Coin.n5Euro:
-      return "500";
-    case Coin.n10Euro:
-      return "1000";
-    case Coin.n20Euro:
-      return "2000";
-    case Coin.n50Euro:
-      return "50000";
-    case Coin.n100Euro:
-      return "100000";
-    default:
-      return "0";
-  }
-}
-
 class MoneyGridState extends State {
   Function(String) onSelectParam;
 

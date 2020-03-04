@@ -18,7 +18,7 @@ class PayingState extends State {
     var widgets = new List<Widget>();
     Coin.values.forEach((coin) {
       widgets.addAll([
-        for (var i = 0; i < appData.currentMoney[describeEnum(coin)]; i++)
+        for (var i = 0; i < appData.splitMoney[describeEnum(coin)]; i++)
           Image(
             image: AssetImage('assets/euros/${describeEnum(coin)}.png'),
             fit: BoxFit.fitWidth,
@@ -71,8 +71,8 @@ class PayingState extends State {
             SizedBox(height: 20),
             MaterialButton(
               onPressed: () {
-                switchScreen();
                 pay();
+                switchScreen();
               },
               textColor: Colors.white,
               color: Colors.green,
@@ -104,6 +104,13 @@ class PayingState extends State {
   }
 
   void pay() {
+    var moneyInPocket = new Map<String, int>.from(appData.currentMoney);
+    var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
+    print('Money to pay: € $moneyToPay');
+    appData.splitMoney = calculate(moneyInPocket, moneyToPay);
+    print("-------------------");
+    printMoney(appData.splitMoney);
+
     /*
     Paying algorithm
     ---------------------------------------
@@ -138,11 +145,62 @@ class PayingState extends State {
       - If the value of the higher coin exceeds the amount to pay (5000 > 4700),
         only use this coin.
     */
-    var moneyInPocket = appData.currentMoney;
-    var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
-    print('Money to pay: € $moneyToPay');
-    moneyToPay = moneyToPay * 100;
-    print('Cents to pay: $moneyToPay');
+  }
+
+  Map<String, int> calculate(
+      Map<String, int> moneyInPocket, double moneyToPay) {
+    var moneySplit = AppData.initMoney();
+    int moneyToPayInCents = (moneyToPay * 100).truncate();
+    int initialMoneyToPayInCents = moneyToPayInCents;
+    int moneyInPocketInCents = 0;
+    Coin.values.forEach((coin) {
+      moneyInPocketInCents +=
+          moneyInPocket[describeEnum(coin)] * coinToValue(coin);
+    });
+
+    if (moneyInPocketInCents < moneyToPayInCents) {
+      print("Not enough money!");
+    }
+
+    while (moneyToPayInCents > 0) {
+      bool stuck = true;
+      for (Coin coin in Coin.values.reversed) {
+        if (moneyInPocket[describeEnum(coin)] > 0 &&
+            coinToValue(coin) <= moneyToPayInCents) {
+          print(describeEnum(coin));
+          print(moneySplit[describeEnum(coin)]);
+          moneySplit[describeEnum(coin)]++;
+          moneyInPocket[describeEnum(coin)]--;
+          moneyToPayInCents -= coinToValue(coin);
+          stuck = false;
+          break;
+        }
+      }
+      if (stuck) {
+        moneyToPayInCents = (moneyToPay * 100).truncate();
+        for (Coin coin in Coin.values) {
+          if (moneyInPocket[describeEnum(coin)] > 0) {
+            if (coinToValue(coin) > initialMoneyToPayInCents) {
+              moneyInPocket = new Map.from(appData.currentMoney);
+              moneySplit = AppData.initMoney();
+              print(describeEnum(coin));
+              moneySplit[describeEnum(coin)]++;
+              moneyInPocket[describeEnum(coin)]--;
+              moneyToPayInCents = initialMoneyToPayInCents - coinToValue(coin);
+            } else {
+              print(describeEnum(coin));
+              moneySplit[describeEnum(coin)]++;
+              moneyInPocket[describeEnum(coin)]--;
+              moneyToPayInCents -= coinToValue(coin);
+            }
+            appData.currentMoney = moneyInPocket;
+            return moneySplit;
+          }
+        }
+      }
+    }
+    appData.currentMoney = moneyInPocket;
+    return moneySplit;
   }
 }
 
