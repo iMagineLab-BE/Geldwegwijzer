@@ -45,24 +45,38 @@ class PayingState extends State {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
+            Text(
+              "Hoeveel moet je betalen?",
               textAlign: TextAlign.center,
-              keyboardType:
-                  TextInputType.numberWithOptions(decimal: true, signed: false),
-//              autofocus: true, // currently throws assertion, see https://github.com/flutter/flutter/pull/48922
-              decoration: InputDecoration(hintText: "Vul hier de prijs in."),
-              inputFormatters: <TextInputFormatter>[
-                DecimalTextInputFormatter(decimalRange: 2)
-              ],
+              style: TextStyle(fontSize: 20),
             ),
-            RaisedButton(
+            SizedBox(height: 10),
+            Center(
+                child: Container(
+                    width: 225,
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      style: TextStyle(fontSize: 20),
+                      keyboardType: TextInputType.numberWithOptions(
+                          decimal: true, signed: false),
+//              autofocus: true, // currently throws assertion, see https://github.com/flutter/flutter/pull/48922
+                      decoration:
+                          InputDecoration(prefixIcon: Icon(Icons.euro_symbol)),
+                      inputFormatters: <TextInputFormatter>[
+                        DecimalTextInputFormatter(decimalRange: 2)
+                      ],
+                    ))),
+            SizedBox(height: 20),
+            MaterialButton(
               onPressed: () {
                 switchScreen();
               },
               textColor: Colors.white,
-              color: Colors.blueAccent,
+              color: Colors.green,
               padding: const EdgeInsets.all(0.0),
               child: const Text('Betalen', style: TextStyle(fontSize: 20)),
+              minWidth: 225,
+              height: 50,
             ),
           ],
         ),
