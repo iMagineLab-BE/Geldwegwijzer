@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geldwegwijzer/MoneyGrid.dart';
-import 'package:geldwegwijzer/Paying.dart';
+import 'package:geldwegwijzer/money_grid.dart';
+import 'package:geldwegwijzer/paying.dart';
 
 void main() => runApp(MyApp());
 

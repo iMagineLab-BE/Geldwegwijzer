@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geldwegwijzer/AppData.dart';
+import 'package:geldwegwijzer/app_data.dart';
 
 class Paying extends StatefulWidget {
   const Paying();
