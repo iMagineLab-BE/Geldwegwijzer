@@ -39,7 +39,6 @@ coinToValue(Coin coin) {
 }
 
 class MoneyGridState extends State {
-
   Function(String) onSelectParam;
 
   List<Widget> getCoinsMenu() {
@@ -68,6 +67,7 @@ class MoneyGridState extends State {
           fit: BoxFit.fitWidth,
           // todo 1: use coins of the same resolution, some are blurry
           // todo 2: instant image loading, tip: precacheImage function
+          // todo 2 (plan B: https://flutter.dev/docs/cookbook/images/fading-in-images)
         ),
         IconButton(
           icon: Icon(Icons.add_circle_outline),

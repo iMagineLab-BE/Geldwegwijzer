@@ -12,6 +12,7 @@ class Paying extends StatefulWidget {
 
 class PayingState extends State {
   var mode = true;
+  TextEditingController moneyController = new TextEditingController();
 
   List<Widget> getCoinsMenu() {
     var widgets = new List<Widget>();
@@ -55,6 +56,7 @@ class PayingState extends State {
                 child: Container(
                     width: 225,
                     child: TextField(
+                      controller: moneyController,
                       textAlignVertical: TextAlignVertical.center,
                       style: TextStyle(fontSize: 20),
                       keyboardType: TextInputType.numberWithOptions(
@@ -70,6 +72,7 @@ class PayingState extends State {
             MaterialButton(
               onPressed: () {
                 switchScreen();
+                pay();
               },
               textColor: Colors.white,
               color: Colors.green,
@@ -98,6 +101,12 @@ class PayingState extends State {
     setState(() {
       mode = !mode;
     });
+  }
+
+  void pay() {
+    var moneyInPocket = appData.currentMoney;
+    var moneyToPay = moneyController.text;
+    print('Money to pay: € $moneyToPay');
   }
 }
 
