@@ -104,9 +104,45 @@ class PayingState extends State {
   }
 
   void pay() {
+    /*
+    Paying algorithm
+    ---------------------------------------
+    Input:
+      - int moneyToPay: amount in cents (e.g. €1.34 => 134)
+      - Map currentMoney:  Map holding the amount of available coins
+    Output:
+      - Map coinsToPay: Map holding the amount of coins to pay
+
+    Example in ideal case:
+    Imagine you want to pay €46.99. You have: 5x2, 1x5, 2x10, 1x20, 2x50 euros.
+    - First, convert to cents: 4699
+    - Round to 5 cents: centsToPay = 4700
+    - Find the highest coin you have that is smaller than centsToPay: 20€
+    - Remove coin and update amount to pay: centsToPay -= 2000 --> 2700
+    - Find the highest coin you have that is smaller than centsToPay: 10€
+    - Remove coin and update amount to pay: centsToPay -= 1000 --> 1700
+    - Find the highest coin you have that is smaller than centsToPay: 10€
+    - Remove coin and update amount to pay: centsToPay -= 1000 --> 700
+    - Find the highest coin you have that is smaller than centsToPay: 5€
+    - Remove coin and update amount to pay: centsToPay -= 500 --> 200
+    - Find the highest coin you have that is smaller than centsToPay: 2€
+    - Remove coin and update amount to pay: centsToPay -= 200 --> 0
+    - Display coins that were removed from the purse.
+
+    Example in non-ideal case:
+    Imagine you want to pay €46.99. You have: 1x5, 1x10, 1x20, 2x50 euros.
+      - Convert to cents and round: 4700
+      - Use 500 + 1000 + 2000 cents = 3500
+      - There are 1200 cents left to pay, but there are no smaller coins left
+      - Use the first higher coin: 50€
+      - If the value of the higher coin exceeds the amount to pay (5000 > 4700),
+        only use this coin.
+    */
     var moneyInPocket = appData.currentMoney;
-    var moneyToPay = moneyController.text;
+    var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
     print('Money to pay: € $moneyToPay');
+    moneyToPay = moneyToPay * 100;
+    print('Cents to pay: $moneyToPay');
   }
 }
 
