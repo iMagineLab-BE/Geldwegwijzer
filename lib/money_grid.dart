@@ -23,6 +23,8 @@ coinToValue(Coin coin) {
       return "100";
     case Coin.n2Euro:
       return "200";
+    case Coin.n5Euro:
+      return "500";
     case Coin.n10Euro:
       return "1000";
     case Coin.n20Euro:

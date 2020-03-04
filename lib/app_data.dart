@@ -7,6 +7,7 @@ enum Coin {
   n50Cent,
   n1Euro,
   n2Euro,
+  n5Euro,
   n10Euro,
   n20Euro,
   n50Euro,
