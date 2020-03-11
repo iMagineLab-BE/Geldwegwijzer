@@ -34,7 +34,7 @@ class MoneyGridState extends State {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
             )),
         Image(
-          image: AssetImage('assets/euros/${describeEnum(coin)}.png'),
+          image: appData.images[coin].image,
           fit: BoxFit.fitWidth,
           // todo 1: use coins of the same resolution, some are blurry
           // todo 2: instant image loading, tip: precacheImage function

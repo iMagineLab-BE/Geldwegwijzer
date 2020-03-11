@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geldwegwijzer/app_data.dart';
 import 'package:geldwegwijzer/money_grid.dart';
 import 'package:geldwegwijzer/paying.dart';
 
@@ -83,5 +85,24 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    for (Coin coin in Coin.values) {
+      appData.images[coin] =
+          Image.asset('assets/euros/${describeEnum(coin)}.png');
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    for (Image image in appData.images.values) {
+      precacheImage(image.image, context);
+    }
   }
 }

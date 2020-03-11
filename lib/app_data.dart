@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 enum Coin {
   n5Cent,
@@ -55,6 +56,7 @@ class AppData {
 
   Map<String, int> currentMoney = initMoney();
   Map<String, int> splitMoney = initMoney();
+  Map<Coin, Image> images = new Map<Coin, Image>();
 
   static Map<String, int> initMoney() {
     var money = new Map<String, int>();

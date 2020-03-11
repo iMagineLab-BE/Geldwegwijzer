@@ -20,7 +20,7 @@ class PayingState extends State {
       widgets.addAll([
         for (var i = 0; i < appData.splitMoney[describeEnum(coin)]; i++)
           Image(
-            image: AssetImage('assets/euros/${describeEnum(coin)}.png'),
+            image: appData.images[coin].image,
             fit: BoxFit.fitWidth,
           ),
       ]);
