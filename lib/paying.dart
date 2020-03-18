@@ -71,7 +71,8 @@ class PayingState extends State {
             SizedBox(height: 20),
             MaterialButton(
               onPressed: () {
-                pay();
+                pay(context);
+                print('switching screen...');
                 switchScreen();
               },
               textColor: Colors.white,
@@ -103,14 +104,7 @@ class PayingState extends State {
     });
   }
 
-  void pay() {
-    var moneyInPocket = new Map<String, int>.from(appData.currentMoney);
-    var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
-    print('Money to pay: € $moneyToPay');
-    appData.splitMoney = calculate(moneyInPocket, moneyToPay);
-    print("-------------------");
-    printMoney(appData.splitMoney);
-
+  void pay(BuildContext context) {
     /*
     Paying algorithm
     ---------------------------------------
@@ -145,10 +139,16 @@ class PayingState extends State {
       - If the value of the higher coin exceeds the amount to pay (5000 > 4700),
         only use this coin.
     */
+    var moneyInPocket = new Map<String, int>.from(appData.currentMoney);
+    var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
+    print('Money to pay: € $moneyToPay');
+    appData.splitMoney = calculate(moneyInPocket, moneyToPay, context);
+    print("-------------------");
+    printMoney(appData.splitMoney);
   }
 
   Map<String, int> calculate(
-      Map<String, int> moneyInPocket, double moneyToPay) {
+      Map<String, int> moneyInPocket, double moneyToPay, BuildContext context) {
     var moneySplit = AppData.initMoney();
     int moneyToPayInCents = (moneyToPay * 100).truncate();
     int initialMoneyToPayInCents = moneyToPayInCents;
@@ -160,6 +160,7 @@ class PayingState extends State {
 
     if (moneyInPocketInCents < moneyToPayInCents) {
       print("Not enough money!");
+      showNotEnoughMoney(context);
     }
 
     while (moneyToPayInCents > 0) {
@@ -183,12 +184,12 @@ class PayingState extends State {
             if (coinToValue(coin) > initialMoneyToPayInCents) {
               moneyInPocket = new Map.from(appData.currentMoney);
               moneySplit = AppData.initMoney();
-              print(describeEnum(coin));
+              //print(describeEnum(coin));
               moneySplit[describeEnum(coin)]++;
               moneyInPocket[describeEnum(coin)]--;
               moneyToPayInCents = initialMoneyToPayInCents - coinToValue(coin);
             } else {
-              print(describeEnum(coin));
+              //print(describeEnum(coin));
               moneySplit[describeEnum(coin)]++;
               moneyInPocket[describeEnum(coin)]--;
               moneyToPayInCents -= coinToValue(coin);
@@ -201,6 +202,25 @@ class PayingState extends State {
     }
     appData.currentMoney = moneyInPocket;
     return moneySplit;
+  }
+
+  Future<void> showNotEnoughMoney(BuildContext context) {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Alert Dialog"),
+            content: Text("Dialog Content"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }
 
