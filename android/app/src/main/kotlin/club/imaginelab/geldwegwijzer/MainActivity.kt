@@ -1,4 +1,4 @@
-package com.example.geldwegwijzer
+package club.imaginelab.geldwegwijzer
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

@@ -1,6 +1,6 @@
-# geldwegwijzer
+# Geldwegwijzer
 
-A new Flutter project.
+An app for helping people pay with cash.
 
 ## Getting Started
 
