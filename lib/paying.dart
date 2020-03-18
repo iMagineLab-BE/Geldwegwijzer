@@ -161,7 +161,7 @@ class PayingState extends State {
 
     if (moneyInPocketInCents < moneyToPayInCents) {
       print("Not enough money!");
-      showNotEnoughMoney();
+      showNotEnoughMoney(moneyInPocketInCents);
       moneySplit = null;
     } else {
       while (moneyToPayInCents > 0) {
@@ -207,15 +207,16 @@ class PayingState extends State {
     return moneySplit;
   }
 
-  showNotEnoughMoney() {
+  showNotEnoughMoney(moneyInPocketInCents) {
     showDialog(
         context: context,
         builder: (_) => new AlertDialog(
-              title: new Text("Niet genoeg geld"),
-              content: new Text("Voeg geld toe aub."),
+              title: new Text("Niet genoeg geld!"),
+              content: new Text(
+                  "Je hebt momenteel maar € ${moneyInPocketInCents / 100}.\nVoeg geld toe in de rechtse tab."),
               actions: <Widget>[
                 FlatButton(
-                  child: Text('Ok'),
+                  child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
