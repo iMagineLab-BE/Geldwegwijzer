@@ -137,14 +137,34 @@ class PayingState extends State {
       - If the value of the higher coin exceeds the amount to pay (5000 > 4700),
         only use this coin.
     */
-    var moneyInPocket = new Map<String, int>.from(appData.currentMoney);
-    var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
-    print('Money to pay: € $moneyToPay');
-    appData.splitMoney = calculate(moneyInPocket, moneyToPay);
-    if (appData.splitMoney != null) {
-      print("-------------------");
-      printMoney(appData.splitMoney);
-      switchScreen();
+
+    // Check if the user entered a valid amount of money to pay
+    if (moneyController.text == '') {
+      showDialog(
+          context: context,
+          builder: (_) => new AlertDialog(
+                title: new Text("Leeg veld"),
+                content: new Text("Geef in hoeveel je moet betalen a.u.b."),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              ));
+    } else {
+      // Start the paying algorithm
+      var moneyInPocket = new Map<String, int>.from(appData.currentMoney);
+      var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
+      print('Money to pay: € $moneyToPay');
+      appData.splitMoney = calculate(moneyInPocket, moneyToPay);
+      if (appData.splitMoney != null) {
+        print("-------------------");
+        printMoney(appData.splitMoney);
+        switchScreen();
+      }
     }
   }
 
