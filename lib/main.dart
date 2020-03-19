@@ -4,7 +4,9 @@ import 'package:geldwegwijzer/app_data.dart';
 import 'package:geldwegwijzer/money_grid.dart';
 import 'package:geldwegwijzer/paying.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
