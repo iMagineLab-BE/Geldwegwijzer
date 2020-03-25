@@ -2,7 +2,7 @@
     "name": "Geldwegwijzer",
     "short_name": "Geldwegwijzer",
     "start_url": ".",
-    "display": "minimal-ui",
+    "display": "standalone",
     "background_color": "#FAFAFA",
     "theme_color": "#4CAF50",
     "description": "An app for helping people pay with cash.",
