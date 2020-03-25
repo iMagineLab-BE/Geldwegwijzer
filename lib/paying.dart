@@ -11,7 +11,8 @@ class Paying extends StatefulWidget {
 }
 
 class PayingState extends State {
-  var mode = true;
+  // The mode parameter switches the screen to the next screen: input > pay > return
+  var mode = 'input';
   TextEditingController moneyController = new TextEditingController();
 
   List<Widget> getCoinsMenu() {
@@ -41,7 +42,7 @@ class PayingState extends State {
 
   @override
   Widget build(BuildContext context) {
-    if (mode) {
+    if (mode == 'input') {
       return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -83,22 +84,42 @@ class PayingState extends State {
           ],
         ),
       );
-    } else {
+    } else if (mode == 'pay') {
       return Scaffold(
-          body: GridView.count(
-        primary: false,
-        padding: const EdgeInsets.all(20),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 3,
-        children: getCoinsMenu(),
-      ));
+          body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Expanded(
+          child: GridView.count(
+            primary: false,
+            padding: const EdgeInsets.all(20),
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            crossAxisCount: 3,
+            children: getCoinsMenu(),
+          ),
+        ),
+        MaterialButton(
+          onPressed: () {
+            switchScreen('return');
+          },
+          textColor: Colors.white,
+          color: Colors.green,
+          padding: const EdgeInsets.all(0.0),
+          child: const Text('KLAAR', style: TextStyle(fontSize: 20)),
+          minWidth: 225,
+          height: 50,
+        ),
+      ]));
+    } else if (mode == 'return') {
+      return Scaffold(
+          body: Column(children: <Widget>[
+        Text('returning screen'),
+      ]));
     }
   }
 
-  void switchScreen() {
+  void switchScreen(new_mode) {
     setState(() {
-      mode = !mode;
+      mode = new_mode;
     });
   }
 
@@ -163,7 +184,7 @@ class PayingState extends State {
       if (appData.splitMoney != null) {
         print("-------------------");
         printMoney(appData.splitMoney);
-        switchScreen();
+        switchScreen('pay');
       }
     }
   }
