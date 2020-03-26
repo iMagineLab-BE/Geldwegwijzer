@@ -28,6 +28,7 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
@@ -66,6 +67,13 @@ android {
             signingConfig signingConfigs.release
         }
     }
+}
+
+play {
+    track = "internal"
+    serviceAccountCredentials = rootProject.file('uploadkey.json')
+    releaseName = "0.0.2-alpha"
+    defaultToAppBundles = true
 }
 
 flutter {

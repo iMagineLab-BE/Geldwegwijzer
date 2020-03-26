@@ -12,6 +12,7 @@
 # Keys
 *.jks
 **/android/key.properties
+**/android/uploadkey.json
 
 # IntelliJ related
 *.iml
