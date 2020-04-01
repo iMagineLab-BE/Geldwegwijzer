@@ -80,7 +80,7 @@ android {
 play {
     track = "internal"
     serviceAccountCredentials = rootProject.file('uploadkey.json')
-    releaseName = "0.0.2-alpha"
+    releaseName = flutterVersionName
     defaultToAppBundles = true
 }
 
