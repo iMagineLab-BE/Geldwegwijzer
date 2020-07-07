@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "526300919602",
+    "firebase_url": "https://imaginelab-club.firebaseio.com",
+    "project_id": "imaginelab-club",
+    "storage_bucket": "imaginelab-club.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526300919602:android:92c3651238c23bf20e492b",
+        "android_client_info": {
+          "package_name": "club.imaginelab.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526300919602-e66kfls29m6uceh6koou4mqcl2b0de56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "club.imaginelab.app",
+            "certificate_hash": "1135f6e1255bea4a36f2e4cfd85dc012fa1405b9"
+          }
+        },
+        {
+          "client_id": "526300919602-q56avu1j0t9mvckanrffe2533e12p67f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnT_na9V92hgxv8UsTQqci2CjGMnz2RdI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526300919602-q56avu1j0t9mvckanrffe2533e12p67f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526300919602:android:1c9636f06afdb8f20e492b",
+        "android_client_info": {
+          "package_name": "club.imaginelab.geldwegwijzer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526300919602-20n1daakmccph4pk3s352ep7qaqr67lk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "club.imaginelab.geldwegwijzer",
+            "certificate_hash": "a68d04d4f73c32eb9b79b9db20a5ff4f95e162ab"
+          }
+        },
+        {
+          "client_id": "526300919602-q56avu1j0t9mvckanrffe2533e12p67f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnT_na9V92hgxv8UsTQqci2CjGMnz2RdI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526300919602-q56avu1j0t9mvckanrffe2533e12p67f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
