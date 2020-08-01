@@ -19,11 +19,15 @@ class NumericKeyboard extends StatelessWidget {
     }
   }
 
+  bool _isHorizontal() {
+    return SizeConfig.screenWidth > SizeConfig.screenHeight;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ConstrainedBox(
-        constraints: BoxConstraints.tightForFinite(width: (SizeConfig.screenWidth <= 800 ? double.maxFinite : SizeConfig.blockSizeHorizontal * 80.0)),
+        constraints: BoxConstraints.tightForFinite(width: _isHorizontal() ? SizeConfig.screenWidth * 0.55 : (SizeConfig.screenWidth <= 800 ? double.maxFinite : SizeConfig.blockSizeHorizontal * 80.0)),
         child: GridView.count(
           crossAxisCount: 3,
           physics: ScrollPhysics(),
@@ -56,6 +60,10 @@ class BackspaceButton extends StatelessWidget {
 
   final onPress;
 
+  bool isHorizontal() {
+    return SizeConfig.screenWidth > SizeConfig.screenHeight;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -65,11 +73,11 @@ class BackspaceButton extends StatelessWidget {
               onPress();
             },
             child: Container(
-                child: Icon(Icons.backspace, size: SizeConfig.blockSizeHorizontal * 8.0)
+                child: Icon(Icons.backspace, size: isHorizontal() ? SizeConfig.blockSizeHorizontal * 5.0 : SizeConfig.blockSizeHorizontal * 8.0)
             ),
             elevation: 3,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3.0),
+              borderRadius: BorderRadius.circular(isHorizontal() ? SizeConfig.blockSizeHorizontal * 2.0 : SizeConfig.blockSizeHorizontal * 3.0),
             )
         )
     );
@@ -82,6 +90,10 @@ class KeyboardButton extends StatelessWidget {
   final Object value;
   final onPress;
 
+  bool isHorizontal() {
+    return SizeConfig.screenWidth > SizeConfig.screenHeight;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -93,11 +105,11 @@ class KeyboardButton extends StatelessWidget {
           color: Colors.green,
           child: Text(
             value.toString(),
-            style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 10.0, color: Colors.white),
+            style: TextStyle(fontSize: isHorizontal() ? SizeConfig.blockSizeHorizontal * 7.0 : SizeConfig.blockSizeHorizontal * 10.0, color: Colors.white),
           ),
           elevation: 3,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(SizeConfig.blockSizeHorizontal * 3.0),
+            borderRadius: BorderRadius.circular(isHorizontal() ? SizeConfig.blockSizeHorizontal * 2.0 : SizeConfig.blockSizeHorizontal * 3.0),
           )
       )
     );

@@ -48,6 +48,8 @@ flutter:
    #- assets/
    - assets/icon.png
    - assets/imaginelab_logo.png
+   - assets/uantwerpen_logo.png
+   - assets/teamscheire_logo.png
    - assets/euros/n1Cent.png
    - assets/euros/n2Cent.png
    - assets/euros/n5Cent.png
