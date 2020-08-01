@@ -23,6 +23,6 @@ Future<void> openAboutApp(BuildContext context) async {
     applicationName: appName,
     applicationVersion: appVersion,
     applicationLegalese: 'Copyright © 2017-' + DateTime.now().year.toString() + ' iMagineLab - All rights reserved.',
-    applicationIcon: Image.asset('assets/icon.png', width: SizeConfig.blockSizeVertical * 11.0)
+    applicationIcon: Image.asset('assets/icon.png', width: SizeConfig.blockSizeVertical * 10.0)
   );
 }
