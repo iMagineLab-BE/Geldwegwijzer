@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:geldwegwijzer/app_data.dart';
 import 'package:geldwegwijzer/money_grid.dart';
 import 'package:geldwegwijzer/paying.dart';
+import 'package:geldwegwijzer/sizeconfig.dart';
+import 'package:geldwegwijzer/about_app.dart';
 
 void main() {
   runApp(MyApp());
@@ -43,10 +45,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  static const TextStyle topStyle =
+  static TextStyle topStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const TextStyle bottomStyle =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.normal);
+  static TextStyle bottomStyle =
+      TextStyle(fontSize: SizeConfig.blockSizeVertical * 2.0, fontWeight: FontWeight.normal);
 
   static const List<Widget> _widgetOptions = <Widget>[
     Paying(),
@@ -63,22 +65,31 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Geldwegwijzer',
           style: topStyle,
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.info),
+            tooltip: 'Info',
+            onPressed: () {
+              openAboutApp(context);
+            },
+          )
+        ],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.payment, size: 30),
+            icon: Icon(Icons.payment, size: SizeConfig.blockSizeVertical * 4.0),
             title: Text('Betalen', style: bottomStyle),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.euro_symbol, size: 30),
+            icon: Icon(Icons.euro_symbol, size: SizeConfig.blockSizeVertical * 4.0),
             title: Text('Geld toevoegen', style: bottomStyle),
           ),
         ],

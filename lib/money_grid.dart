@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geldwegwijzer/app_data.dart';
+import 'package:geldwegwijzer/sizeconfig.dart';
 
 class MoneyGrid extends StatefulWidget {
   const MoneyGrid();
@@ -18,7 +19,7 @@ class MoneyGridState extends State {
       widgets.addAll([
         IconButton(
           icon: Icon(Icons.remove_circle_outline),
-          iconSize: 50,
+          iconSize: SizeConfig.blockSizeVertical * 8.0,
           tooltip: 'Verwijder 1',
           onPressed: () {
             setState(() {
@@ -31,7 +32,7 @@ class MoneyGridState extends State {
             child: Text(
               '${appData.currentMoney[describeEnum(coin)]} x ',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: SizeConfig.blockSizeVertical * 5.0),
             )),
         Image(
           image: appData.images[coin].image,
@@ -42,7 +43,7 @@ class MoneyGridState extends State {
         ),
         IconButton(
           icon: Icon(Icons.add_circle_outline),
-          iconSize: 50,
+          iconSize: SizeConfig.blockSizeVertical * 8.0,
           tooltip: 'Voeg 1 toe',
           onPressed: () {
             setState(() {

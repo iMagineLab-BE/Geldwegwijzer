@@ -23,6 +23,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  package_info: ^0.4.0+16
 
 #  pwa: ^0.2.0 # Progressive Web App
 
@@ -45,6 +46,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    #- assets/
+   - assets/icon.png
+   - assets/imaginelab_logo.png
    - assets/euros/n1Cent.png
    - assets/euros/n2Cent.png
    - assets/euros/n5Cent.png
