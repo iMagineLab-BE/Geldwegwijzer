@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geldwegwijzer/app_data.dart';
+import 'package:geldwegwijzer/keyboard.dart';
+import 'package:geldwegwijzer/sizeconfig.dart';
 
 class Paying extends StatefulWidget {
   const Paying();
@@ -43,45 +45,56 @@ class PayingState extends State {
   Widget build(BuildContext context) {
     if (mode) {
       return Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Hoeveel moet je betalen?",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 10),
-            Center(
-                child: Container(
-                    width: 225,
-                    child: TextField(
-                      controller: moneyController,
-                      textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(fontSize: 20),
-                      keyboardType: TextInputType.numberWithOptions(
-                          decimal: true, signed: false),
-//              autofocus: true, // currently throws assertion, see https://github.com/flutter/flutter/pull/48922
-                      decoration:
-                          InputDecoration(prefixIcon: Icon(Icons.euro_symbol)),
-                      inputFormatters: <TextInputFormatter>[
-                        DecimalTextInputFormatter(decimalRange: 2)
-                      ],
-                    ))),
-            SizedBox(height: 20),
-            MaterialButton(
-              onPressed: () {
-                pay();
-              },
-              textColor: Colors.white,
-              color: Colors.green,
-              padding: const EdgeInsets.all(0.0),
-              child: const Text('Betalen', style: TextStyle(fontSize: 20)),
-              minWidth: 225,
-              height: 50,
-            ),
-          ],
-        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Spacer(),
+              Text(
+                "Hoeveel moet je betalen?",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
+              ),
+              SizedBox(height: SizeConfig.blockSizeVertical * 2.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                      width: SizeConfig.blockSizeHorizontal * 50,
+                      child: TextField(
+                        readOnly: true,
+                        controller: moneyController,
+                        textAlignVertical: TextAlignVertical.center,
+                        style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
+                        keyboardType: TextInputType.numberWithOptions(
+                            decimal: true, signed: false),
+                        decoration: InputDecoration(prefixIcon: Icon(Icons.euro_symbol, size: SizeConfig.blockSizeVertical * 4)),
+                        inputFormatters: <TextInputFormatter>[
+                          DecimalTextInputFormatter(decimalRange: 2)
+                        ],
+                      )
+                  ),
+                  SizedBox(width: SizeConfig.blockSizeHorizontal * 2.0),
+                  RaisedButton(
+                      onPressed: () {
+                        pay();
+                      },
+                      textColor: Colors.white,
+                      color: Colors.green,
+                      padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0),
+                      child: Text('Betalen', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4)),
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
+                      )
+                  ),
+                ],
+              ),
+              Spacer(),
+              NumericKeyboard(moneyController),
+            ],
+          ),
+        )
       );
     } else {
       return Scaffold(
