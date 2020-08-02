@@ -53,6 +53,17 @@ void printMoney(Map money) {
   });
 }
 
+int calculateIntegerCoinsValue(Map<String, int> coinMap) {
+  int totalValue = 0;
+
+  Coin.values.forEach((coin) {
+    totalValue +=
+        coinMap[describeEnum(coin)] * coinToValue(coin);
+  });
+
+  return totalValue;
+}
+
 Map<String, int> initMoneyMap() {
   Map<String, int> moneyMap = Map<String, int>();
 
@@ -70,6 +81,8 @@ class AppData {
   Map<String, int> currentMoney = Map<String, int>();
   Map<String, int> splitMoney = Map<String, int>();
   Map<Coin, Image> images = Map<Coin, Image>();
+  double toPay = 0;
+  double splitMoneyTotal = 0;
 
   static void init() {
     _loadLocalStorage();

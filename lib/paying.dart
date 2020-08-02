@@ -176,7 +176,27 @@ class PayingState extends State {
   }
 
   void closeToPayScreen(BuildContext context) {
-    Navigator.pop(context);
+    if(appData.toPay != appData.splitMoneyTotal) {
+      String changeMoneyString = (appData.splitMoneyTotal - appData.toPay).toStringAsFixed(2);
+      showDialog(
+          context: context,
+          builder: (_) => new AlertDialog(
+            title: Text("Wisselgeld", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
+            content: Text("Je moet €$changeMoneyString terugkrijgen. Voeg de gekregen munten en biljetten in onder de tab 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Wisselgeld toevoegen', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                onPressed: () {
+                  Navigator.of(context).pop(); //Close popup
+                  Navigator.pop(context); //Close to pay screen
+                },
+              )
+            ],
+          ));
+    }
+    else {
+      Navigator.pop(context);
+    }
   }
 
   void openToPayScreen() {
@@ -304,6 +324,9 @@ class PayingState extends State {
         var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
         print('Money to pay: € $moneyToPay');
         appData.splitMoney = calculate(moneyInPocket, moneyToPay);
+        appData.toPay = moneyToPay;
+        appData.splitMoneyTotal = calculateIntegerCoinsValue(appData.splitMoney) / 100;
+
         if (appData.splitMoney != null) {
           print("-------------------");
           printMoney(appData.splitMoney);
@@ -334,11 +357,7 @@ class PayingState extends State {
     var moneySplit = initMoneyMap();
     int moneyToPayInCents = (moneyToPay * 100).truncate();
     int initialMoneyToPayInCents = moneyToPayInCents;
-    int moneyInPocketInCents = 0;
-    Coin.values.forEach((coin) {
-      moneyInPocketInCents +=
-          moneyInPocket[describeEnum(coin)] * coinToValue(coin);
-    });
+    int moneyInPocketInCents = calculateIntegerCoinsValue(moneyInPocket);
 
     if (moneyInPocketInCents < moneyToPayInCents) {
       print("Not enough money!");
