@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geldwegwijzer/sizeconfig.dart';
 
@@ -74,7 +75,10 @@ class BackspaceButton extends StatelessWidget {
             },
             child: Container(
                 child: FittedBox(
-                  child: Icon(Icons.backspace, size: SizeConfig.blockSizeHorizontal * 100),
+                  child: Padding(
+                    child: Icon(Icons.backspace, size: SizeConfig.blockSizeHorizontal * 100),
+                    padding: EdgeInsets.all(isHorizontal() ? SizeConfig.blockSizeVertical * 15.0 : SizeConfig.blockSizeHorizontal * 10.0),
+                  ),
                   fit: BoxFit.scaleDown
                 )
             ),
