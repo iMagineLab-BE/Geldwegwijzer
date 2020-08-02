@@ -177,12 +177,12 @@ class PayingState extends State {
 
   void closeToPayScreen(BuildContext context) {
     if(appData.toPay != appData.splitMoneyTotal) {
-      String changeMoneyString = (appData.splitMoneyTotal - appData.toPay).toStringAsFixed(2);
+      double changeMoney = appData.splitMoneyTotal - appData.toPay;
       showDialog(
           context: context,
           builder: (_) => new AlertDialog(
             title: Text("Wisselgeld", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
-            content: Text("Je moet €$changeMoneyString terugkrijgen. Voeg de gekregen munten en biljetten in onder de tab 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+            content: Text("Je moet " + euroFormatter.format(changeMoney) + " terugkrijgen. Voeg de gekregen munten en biljetten in onder de tab 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
             actions: <Widget>[
               FlatButton(
                 child: Text('Wisselgeld toevoegen', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
@@ -227,7 +227,7 @@ class PayingState extends State {
               body: Column(
                 children: <Widget>[
                   SizedBox(height: SizeConfig.blockSizeVertical * 0.3),
-                  Text("Te betalen: €" + appData.toPay.toStringAsFixed(2), style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 6.0)),
+                  Text("Te betalen: " + euroFormatter.format(appData.toPay), style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 6.0)),
                   Divider(thickness: 2.0),
                   Flexible(
                     child: Scrollbar(
@@ -322,12 +322,12 @@ class PayingState extends State {
 
       try {
         var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
-        print('Money to pay: € $moneyToPay');
+        print('Money to pay: ' + euroFormatter.format(moneyToPay));
         appData.splitMoney = calculate(moneyInPocket, moneyToPay);
-        appData.toPay = moneyToPay;
-        appData.splitMoneyTotal = calculateIntegerCoinsValue(appData.splitMoney) / 100;
 
         if (appData.splitMoney != null) {
+          appData.toPay = moneyToPay;
+          appData.splitMoneyTotal = calculateIntegerCoinsValue(appData.splitMoney) / 100;
           print("-------------------");
           printMoney(appData.splitMoney);
           openToPayScreen();
@@ -415,7 +415,7 @@ class PayingState extends State {
         builder: (_) => new AlertDialog(
           title: new Text("Niet genoeg geld!", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
           content: new Text(
-              "Je hebt momenteel: €${moneyInPocketInCents / 100}\nVoeg geld toe in de tab: 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+              "Je hebt momenteel: " + euroFormatter.format(moneyInPocketInCents / 100) + "\nVoeg geld toe in de tab: 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
           actions: <Widget>[
             FlatButton(
               child: Text('Sluiten', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),

@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   package_info: ^0.4.0+16
   localstorage: ^3.0.2+5
+  intl: ^0.16.1
 
 #  pwa: ^0.2.0 # Progressive Web App
 

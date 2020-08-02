@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
 
 enum Coin {
@@ -63,6 +64,8 @@ int calculateIntegerCoinsValue(Map<String, int> coinMap) {
 
   return totalValue;
 }
+
+var euroFormatter = NumberFormat.currency(symbol: "€", locale: "nl-BE");
 
 Map<String, int> initMoneyMap() {
   Map<String, int> moneyMap = Map<String, int>();
