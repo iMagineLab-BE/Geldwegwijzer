@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:geldwegwijzer/app_data.dart';
 import 'package:geldwegwijzer/keyboard.dart';
 import 'package:geldwegwijzer/sizeconfig.dart';
-
-import 'about_app.dart';
+import 'package:geldwegwijzer/about_app.dart';
 
 class Paying extends StatefulWidget {
   const Paying();
@@ -15,7 +14,6 @@ class Paying extends StatefulWidget {
 }
 
 class PayingState extends State {
-  static TextStyle topStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   TextEditingController moneyController = new TextEditingController();
 
   List<Widget> getCoinsMenu() {
@@ -80,7 +78,7 @@ class PayingState extends State {
                     textColor: Colors.white,
                     color: Colors.green,
                     padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0),
-                    child: Text('Betalen', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4)),
+                    child: Text('Betalen', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 7)),
                     elevation: 3,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
@@ -188,9 +186,12 @@ class PayingState extends State {
         builder: (BuildContext context) {
           return Scaffold(
               appBar: AppBar(
-                title: Text(
-                  'Geldwegwijzer',
-                  style: topStyle,
+                title: FittedBox(
+                    child: Text(
+                      'Geldwegwijzer',
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    fit: BoxFit.scaleDown
                 ),
                 automaticallyImplyLeading: false,
                 actions: <Widget>[
@@ -330,8 +331,8 @@ class PayingState extends State {
         for (Coin coin in Coin.values.reversed) {
           if (moneyInPocket[describeEnum(coin)] > 0 &&
               coinToValue(coin) <= moneyToPayInCents) {
-            print(describeEnum(coin));
-            print(moneySplit[describeEnum(coin)]);
+            //print(describeEnum(coin));
+            //print(moneySplit[describeEnum(coin)]);
             moneySplit[describeEnum(coin)]++;
             moneyInPocket[describeEnum(coin)]--;
             moneyToPayInCents -= coinToValue(coin);

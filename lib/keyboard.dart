@@ -67,13 +67,16 @@ class BackspaceButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 0.5, horizontal: SizeConfig.blockSizeHorizontal * 0.5),
         child: RaisedButton(
             onPressed: () {
               onPress();
             },
             child: Container(
-                child: Icon(Icons.backspace, size: isHorizontal() ? SizeConfig.blockSizeHorizontal * 5.0 : SizeConfig.blockSizeHorizontal * 8.0)
+                child: FittedBox(
+                  child: Icon(Icons.backspace, size: SizeConfig.blockSizeHorizontal * 100),
+                  fit: BoxFit.scaleDown
+                )
             ),
             elevation: 3,
             shape: RoundedRectangleBorder(
@@ -103,9 +106,12 @@ class KeyboardButton extends StatelessWidget {
             onPress(value);
           },
           color: Colors.green,
-          child: Text(
-            value.toString(),
-            style: TextStyle(fontSize: isHorizontal() ? SizeConfig.blockSizeHorizontal * 7.0 : SizeConfig.blockSizeHorizontal * 10.0, color: Colors.white),
+          child: FittedBox(
+            child: Text(
+              value.toString(),
+              style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 100, color: Colors.white),
+            ),
+            fit: BoxFit.scaleDown,
           ),
           elevation: 3,
           shape: RoundedRectangleBorder(

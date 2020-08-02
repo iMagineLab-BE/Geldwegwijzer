@@ -45,8 +45,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  static TextStyle topStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static TextStyle bottomStyle =
       TextStyle(fontSize: SizeConfig.blockSizeVertical * 2.0, fontWeight: FontWeight.normal);
 
@@ -65,9 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Geldwegwijzer',
-          style: topStyle,
+        title: FittedBox(
+          child: Text(
+            'Geldwegwijzer',
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          fit: BoxFit.scaleDown
         ),
         actions: <Widget>[
           IconButton(
