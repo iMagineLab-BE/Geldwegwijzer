@@ -5,6 +5,8 @@ import 'package:geldwegwijzer/app_data.dart';
 import 'package:geldwegwijzer/keyboard.dart';
 import 'package:geldwegwijzer/sizeconfig.dart';
 
+import 'about_app.dart';
+
 class Paying extends StatefulWidget {
   const Paying();
 
@@ -13,7 +15,7 @@ class Paying extends StatefulWidget {
 }
 
 class PayingState extends State {
-  var mode = true;
+  static TextStyle topStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   TextEditingController moneyController = new TextEditingController();
 
   List<Widget> getCoinsMenu() {
@@ -89,8 +91,7 @@ class PayingState extends State {
             Spacer()
           ]
       );
-    }
-    else {
+    } else {
       return Column(
           children: <Widget>[
             Text(
@@ -136,7 +137,6 @@ class PayingState extends State {
           ]
       );
     }
-
   }
 
   bool isLandscape() {
@@ -145,55 +145,102 @@ class PayingState extends State {
 
   @override
   Widget build(BuildContext context) {
-    if (mode) {
-      if (isLandscape()) {
-        return Scaffold(
-            body: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Spacer(),
-                  _amountFieldWidget(),
-                  Spacer(),
-                  NumericKeyboard(moneyController),
-                ],
-              ),
-            )
-        );
-      }
-      else {
-        return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Spacer(),
-                  _amountFieldWidget(),
-                  Spacer(),
-                  NumericKeyboard(moneyController),
-                ],
-              ),
-            )
-        );
-      }
-
-    } else {
+    if (isLandscape()) {
       return Scaffold(
-          body: GridView.count(
-        primary: false,
-        padding: const EdgeInsets.all(20),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 3,
-        children: getCoinsMenu(),
-      ));
+          body: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Spacer(),
+                _amountFieldWidget(),
+                Spacer(),
+                NumericKeyboard(moneyController),
+              ],
+            ),
+          )
+      );
+    }
+    else {
+      return Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Spacer(),
+                _amountFieldWidget(),
+                Spacer(),
+                NumericKeyboard(moneyController),
+              ],
+            ),
+          )
+      );
     }
   }
 
-  void switchScreen() {
-    setState(() {
-      mode = !mode;
-    });
+  void closeToPayScreen(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void openToPayScreen() {
+    moneyController.clear();
+
+    Navigator.push(context, MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  'Geldwegwijzer',
+                  style: topStyle,
+                ),
+                automaticallyImplyLeading: false,
+                actions: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.info),
+                    tooltip: 'Info',
+                    onPressed: () {
+                      openAboutApp(context);
+                    },
+                  )
+                ],
+              ),
+              body: Column(
+                children: <Widget>[
+                  SizedBox(height: SizeConfig.blockSizeVertical * 0.3),
+                  Text("Te betalen", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 6.0)),
+                  Divider(thickness: 2.0),
+                  Flexible(
+                    child: Scrollbar(
+                      child: GridView.count(
+                        primary: false,
+                        padding: const EdgeInsets.all(20),
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        crossAxisCount: isLandscape() ? 5 : 3,
+                        children: getCoinsMenu(),
+                        childAspectRatio: 1,
+                      )
+                    )
+                  ),
+                  Divider(thickness: 2.0),
+                  RaisedButton(
+                    onPressed: () {
+                      closeToPayScreen(context);
+                    },
+                    textColor: Colors.white,
+                    color: Colors.green,
+                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0),
+                    child: Text('Betaling voltooid', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4)),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
+                    )
+                  ),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                ],
+              )
+          );
+        }
+    ));
   }
 
   void pay() {
@@ -257,7 +304,7 @@ class PayingState extends State {
       if (appData.splitMoney != null) {
         print("-------------------");
         printMoney(appData.splitMoney);
-        switchScreen();
+        openToPayScreen();
       }
     }
   }

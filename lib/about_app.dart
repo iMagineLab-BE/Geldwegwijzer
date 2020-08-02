@@ -12,22 +12,22 @@ Future<void> openAboutApp(BuildContext context) async {
     Text('In samenwerking met', textAlign: TextAlign.center, style: TextStyle(fontSize: isHorizontal ? SizeConfig.blockSizeVertical * 4.0 : SizeConfig.blockSizeVertical * 2.0)),
     Row(
       children: <Widget>[
-        Image.asset('assets/teamscheire_logo.png', width: SizeConfig.blockSizeHorizontal * 25.0),
+        Image.asset('assets/teamscheire_logo.png', width: isHorizontal ? SizeConfig.blockSizeHorizontal * 16.0 : SizeConfig.blockSizeHorizontal * 25.0),
         SizedBox(width: SizeConfig.blockSizeHorizontal * 4.0),
-        Image.asset('assets/uantwerpen_logo.png', width: SizeConfig.blockSizeHorizontal * 30.0),
+        Image.asset('assets/uantwerpen_logo.png', width: isHorizontal ? SizeConfig.blockSizeHorizontal * 20.0 : SizeConfig.blockSizeHorizontal * 30.0),
       ],
       mainAxisAlignment: MainAxisAlignment.center,
     ),
     Row(children: <Widget>[
       Spacer(),
-      Image.asset('assets/imaginelab_logo.png', width: SizeConfig.blockSizeHorizontal * 30.0),
+      Image.asset('assets/imaginelab_logo.png', width: isHorizontal ? SizeConfig.blockSizeHorizontal * 20.0 : SizeConfig.blockSizeHorizontal * 30.0),
       Spacer()
     ],)
   ];
 
   if (kIsWeb) {
     appName = 'Geldwegwijzer';
-    appVersion = '2.0.0';
+    appVersion = '2.0.5';
   }
   else {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
