@@ -39,9 +39,9 @@ int coinToValue(Coin coin) {
     case Coin.n20Euro:
       return 2000;
     case Coin.n50Euro:
-      return 50000;
+      return 5000;
     case Coin.n100Euro:
-      return 100000;
+      return 10000;
     default:
       return 0;
   }
