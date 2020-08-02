@@ -295,17 +295,36 @@ class PayingState extends State {
                     },
                   )
                 ],
-              ));
+          ));
     } else {
       // Start the paying algorithm
       var moneyInPocket = new Map<String, int>.from(appData.currentMoney);
-      var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
-      print('Money to pay: € $moneyToPay');
-      appData.splitMoney = calculate(moneyInPocket, moneyToPay);
-      if (appData.splitMoney != null) {
-        print("-------------------");
-        printMoney(appData.splitMoney);
-        openToPayScreen();
+
+      try {
+        var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
+        print('Money to pay: € $moneyToPay');
+        appData.splitMoney = calculate(moneyInPocket, moneyToPay);
+        if (appData.splitMoney != null) {
+          print("-------------------");
+          printMoney(appData.splitMoney);
+          openToPayScreen();
+        }
+      }
+      on FormatException catch(e) {
+        showDialog(
+            context: context,
+            builder: (_) => new AlertDialog(
+              title: Text("Ongeldige waarde", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
+              content: Text("Het bedrag in het veld is niet geldig!\nControleer dat er geen meerdere komma's in het bedrag voorkomen en probeer opnieuw.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Sluiten', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ));
       }
     }
   }
