@@ -312,7 +312,7 @@ class PayingState extends State {
 
   Map<String, int> calculate(
       Map<String, int> moneyInPocket, double moneyToPay) {
-    var moneySplit = AppData.initMoney();
+    var moneySplit = initMoneyMap();
     int moneyToPayInCents = (moneyToPay * 100).truncate();
     int initialMoneyToPayInCents = moneyToPayInCents;
     int moneyInPocketInCents = 0;
@@ -346,7 +346,7 @@ class PayingState extends State {
             if (moneyInPocket[describeEnum(coin)] > 0) {
               if (coinToValue(coin) > initialMoneyToPayInCents) {
                 moneyInPocket = new Map.from(appData.currentMoney);
-                moneySplit = AppData.initMoney();
+                moneySplit = initMoneyMap();
                 //print(describeEnum(coin));
                 moneySplit[describeEnum(coin)]++;
                 moneyInPocket[describeEnum(coin)]--;
@@ -359,12 +359,14 @@ class PayingState extends State {
                 moneyToPayInCents -= coinToValue(coin);
               }
               appData.currentMoney = moneyInPocket;
+              AppData.saveState();
               return moneySplit;
             }
           }
         }
       }
       appData.currentMoney = moneyInPocket;
+      AppData.saveState();
     }
     return moneySplit;
   }

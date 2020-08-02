@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:localstorage/localstorage.dart';
 
 enum Coin {
   n5Cent,
@@ -51,25 +53,54 @@ void printMoney(Map money) {
   });
 }
 
+Map<String, int> initMoneyMap() {
+  Map<String, int> moneyMap = Map<String, int>();
+
+  Coin.values.forEach((coin) {
+    moneyMap[describeEnum(coin)] = 0;
+  });
+
+  return moneyMap;
+}
+
 class AppData {
   static final AppData _appData = new AppData._internal();
+  static final LocalStorage storage = LocalStorage('appdata.json');
 
-  Map<String, int> currentMoney = initMoney();
-  Map<String, int> splitMoney = initMoney();
-  Map<Coin, Image> images = new Map<Coin, Image>();
+  Map<String, int> currentMoney = Map<String, int>();
+  Map<String, int> splitMoney = Map<String, int>();
+  Map<Coin, Image> images = Map<Coin, Image>();
 
-  static Map<String, int> initMoney() {
-    var money = new Map<String, int>();
-    Coin.values.forEach((coin) {
-      money[describeEnum(coin)] = 0;
-    });
-    return money;
+  static void init() {
+    _loadLocalStorage();
+
+    _appData.splitMoney = initMoneyMap();
+  }
+
+  static void _loadLocalStorage() async {
+    await storage.ready; // Waiting for the local storage is be ready
+    Map<String, dynamic> moneyData = storage.getItem('money');
+
+    if(moneyData == null) {
+      print('Initialising local storage...');
+      moneyData = initMoneyMap();
+
+      storage.setItem('money', moneyData);
+    }
+
+    _appData.currentMoney = moneyData.cast<String, int>();
+  }
+
+  static void saveState() {
+    storage.setItem('money', _appData.currentMoney);
   }
 
   void increaseCoin(Coin coin) {
     currentMoney[describeEnum(coin)]++;
     print("Coin type: ${describeEnum(coin)}, "
         "increased to amount: ${currentMoney[describeEnum(coin)]}");
+
+    saveState();
   }
 
   void decreaseCoin(Coin coin) {
@@ -80,11 +111,16 @@ class AppData {
     currentMoney[describeEnum(coin)]--;
     print("Coin type: ${describeEnum(coin)}, "
         "decreased to amount: ${currentMoney[describeEnum(coin)]}");
+
+    saveState();
   }
 
   factory AppData() {
+    init();
+
     return _appData;
   }
+
   AppData._internal();
 }
 
