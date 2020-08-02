@@ -227,7 +227,7 @@ class PayingState extends State {
               body: Column(
                 children: <Widget>[
                   SizedBox(height: SizeConfig.blockSizeVertical * 0.3),
-                  Text("Te betalen", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 6.0)),
+                  Text("Te betalen: €" + appData.toPay.toStringAsFixed(2), style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 6.0)),
                   Divider(thickness: 2.0),
                   Flexible(
                     child: Scrollbar(
