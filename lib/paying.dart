@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geldwegwijzer/about_app.dart';
 import 'package:geldwegwijzer/app_data.dart';
 import 'package:geldwegwijzer/keyboard.dart';
 import 'package:geldwegwijzer/sizeconfig.dart';
-import 'package:geldwegwijzer/about_app.dart';
 
 class Paying extends StatefulWidget {
   const Paying();
@@ -42,98 +42,98 @@ class PayingState extends State {
   }
 
   Widget _amountFieldWidget() {
-    if(isLandscape()) {
-      return Column(
+    if (isLandscape()) {
+      return Column(children: <Widget>[
+        Spacer(),
+        Text(
+          "Hoeveel moet je betalen?",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
+        ),
+        SizedBox(height: SizeConfig.blockSizeVertical * 2.0),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Spacer(),
-            Text(
-              "Hoeveel moet je betalen?",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
-            ),
+            Container(
+                width: SizeConfig.blockSizeHorizontal * 40,
+                child: TextField(
+                  readOnly: true,
+                  controller: moneyController,
+                  textAlignVertical: TextAlignVertical.center,
+                  style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: false),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.euro_symbol,
+                          size: SizeConfig.blockSizeVertical * 4)),
+                )),
             SizedBox(height: SizeConfig.blockSizeVertical * 2.0),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                    width: SizeConfig.blockSizeHorizontal * 40,
-                    child: TextField(
-                      readOnly: true,
-                      controller: moneyController,
-                      textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
-                      keyboardType: TextInputType.numberWithOptions(
-                          decimal: true, signed: false),
-                      decoration: InputDecoration(prefixIcon: Icon(Icons.euro_symbol, size: SizeConfig.blockSizeVertical * 4)),
-                      inputFormatters: <TextInputFormatter>[
-                        DecimalTextInputFormatter(decimalRange: 2)
-                      ],
-                    )
-                ),
-                SizedBox(height: SizeConfig.blockSizeVertical * 2.0),
-                RaisedButton(
-                    onPressed: () {
-                      pay();
-                    },
-                    textColor: Colors.white,
-                    color: Colors.green,
-                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0),
-                    child: Text('Betalen', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 7)),
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
-                    )
-                ),
-              ],
-            ),
-            Spacer()
-          ]
-      );
+            RaisedButton(
+                onPressed: () {
+                  pay();
+                },
+                textColor: Colors.white,
+                color: Colors.green,
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 2.0,
+                    horizontal: SizeConfig.blockSizeHorizontal * 4.0),
+                child: Text('Betalen',
+                    style:
+                        TextStyle(fontSize: SizeConfig.blockSizeVertical * 7)),
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
+                )),
+          ],
+        ),
+        Spacer()
+      ]);
     } else {
-      return Column(
+      return Column(children: <Widget>[
+        Text(
+          "Hoeveel moet je betalen?",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
+        ),
+        SizedBox(height: SizeConfig.blockSizeVertical * 2.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "Hoeveel moet je betalen?",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
-            ),
-            SizedBox(height: SizeConfig.blockSizeVertical * 2.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                    width: SizeConfig.blockSizeHorizontal * 50,
-                    child: TextField(
-                      readOnly: true,
-                      controller: moneyController,
-                      textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
-                      keyboardType: TextInputType.numberWithOptions(
-                          decimal: true, signed: false),
-                      decoration: InputDecoration(prefixIcon: Icon(Icons.euro_symbol, size: SizeConfig.blockSizeVertical * 4)),
-                      inputFormatters: <TextInputFormatter>[
-                        DecimalTextInputFormatter(decimalRange: 2)
-                      ],
-                    )
-                ),
-                SizedBox(width: SizeConfig.blockSizeHorizontal * 2.0),
-                RaisedButton(
-                    onPressed: () {
-                      pay();
-                    },
-                    textColor: Colors.white,
-                    color: Colors.green,
-                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0),
-                    child: Text('Betalen', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4)),
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
-                    )
-                ),
-              ],
-            ),
-          ]
-      );
+            Container(
+                width: SizeConfig.blockSizeHorizontal * 50,
+                child: TextField(
+                  readOnly: true,
+                  controller: moneyController,
+                  textAlignVertical: TextAlignVertical.center,
+                  style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: false),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.euro_symbol,
+                          size: SizeConfig.blockSizeVertical * 4)),
+                )),
+            SizedBox(width: SizeConfig.blockSizeHorizontal * 2.0),
+            RaisedButton(
+                onPressed: () {
+                  pay();
+                },
+                textColor: Colors.white,
+                color: Colors.green,
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 2.0,
+                    horizontal: SizeConfig.blockSizeHorizontal * 4.0),
+                child: Text('Betalen',
+                    style:
+                        TextStyle(fontSize: SizeConfig.blockSizeVertical * 4)),
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
+                )),
+          ],
+        ),
+      ]);
     }
   }
 
@@ -146,55 +146,60 @@ class PayingState extends State {
     if (isLandscape()) {
       return Scaffold(
           body: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Spacer(),
-                _amountFieldWidget(),
-                Spacer(),
-                NumericKeyboard(moneyController),
-              ],
-            ),
-          )
-      );
-    }
-    else {
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Spacer(),
+            _amountFieldWidget(),
+            Spacer(),
+            NumericKeyboard(moneyController),
+          ],
+        ),
+      ));
+    } else {
       return Scaffold(
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Spacer(),
-                _amountFieldWidget(),
-                Spacer(),
-                NumericKeyboard(moneyController),
-              ],
-            ),
-          )
-      );
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Spacer(),
+            _amountFieldWidget(),
+            Spacer(),
+            NumericKeyboard(moneyController),
+          ],
+        ),
+      ));
     }
   }
 
   void closeToPayScreen(BuildContext context) {
-    if(appData.toPay != appData.splitMoneyTotal) {
+    if (appData.toPay != appData.splitMoneyTotal) {
       double changeMoney = appData.splitMoneyTotal - appData.toPay;
       showDialog(
           context: context,
           builder: (_) => new AlertDialog(
-            title: Text("Wisselgeld", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
-            content: Text("Je moet " + euroFormatter.format(changeMoney) + " terugkrijgen. Voeg de gekregen munten en biljetten in onder de tab 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Wisselgeld toevoegen', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
-                onPressed: () {
-                  Navigator.of(context).pop(); //Close popup
-                  Navigator.pop(context); //Close to pay screen
-                },
-              )
-            ],
-          ));
-    }
-    else {
+                title: Text("Wisselgeld",
+                    style: TextStyle(
+                        fontSize: SizeConfig.blockSizeVertical * 5.0)),
+                content: Text(
+                    "Je moet " +
+                        euroFormatter.format(changeMoney) +
+                        " terugkrijgen. Voeg de gekregen munten en biljetten in onder de tab 'Geld toevoegen'.",
+                    style: TextStyle(
+                        fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Wisselgeld toevoegen',
+                        style: TextStyle(
+                            fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                    onPressed: () {
+                      Navigator.of(context).pop(); //Close popup
+                      Navigator.pop(context); //Close to pay screen
+                    },
+                  )
+                ],
+              ));
+    } else {
       Navigator.pop(context);
     }
   }
@@ -202,66 +207,66 @@ class PayingState extends State {
   void openToPayScreen() {
     moneyController.clear();
 
-    Navigator.push(context, MaterialPageRoute(
-        builder: (BuildContext context) {
-          return Scaffold(
-              appBar: AppBar(
-                title: FittedBox(
-                    child: Text(
-                      'Geldwegwijzer',
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                    fit: BoxFit.scaleDown
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return Scaffold(
+          appBar: AppBar(
+            title: FittedBox(
+                child: Text(
+                  'Geldwegwijzer',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
-                automaticallyImplyLeading: false,
-                actions: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.info),
-                    tooltip: 'Info',
-                    onPressed: () {
-                      openAboutApp(context);
-                    },
-                  )
-                ],
-              ),
-              body: Column(
-                children: <Widget>[
-                  SizedBox(height: SizeConfig.blockSizeVertical * 0.3),
-                  Text("Te betalen: " + euroFormatter.format(appData.toPay), style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 6.0)),
-                  Divider(thickness: 2.0),
-                  Flexible(
-                    child: Scrollbar(
-                      child: GridView.count(
-                        primary: false,
-                        padding: const EdgeInsets.all(20),
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        crossAxisCount: isLandscape() ? 5 : 3,
-                        children: getCoinsMenu(),
-                        childAspectRatio: 1,
-                      )
-                    )
-                  ),
-                  Divider(thickness: 2.0),
-                  RaisedButton(
-                    onPressed: () {
-                      closeToPayScreen(context);
-                    },
-                    textColor: Colors.white,
-                    color: Colors.green,
-                    padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0),
-                    child: Text('Betaling voltooid', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4)),
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
-                    )
-                  ),
-                  SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                ],
+                fit: BoxFit.scaleDown),
+            automaticallyImplyLeading: false,
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.info),
+                tooltip: 'Info',
+                onPressed: () {
+                  openAboutApp(context);
+                },
               )
-          );
-        }
-    ));
+            ],
+          ),
+          body: Column(
+            children: <Widget>[
+              SizedBox(height: SizeConfig.blockSizeVertical * 0.3),
+              Text("Te betalen: " + euroFormatter.format(appData.toPay),
+                  style:
+                      TextStyle(fontSize: SizeConfig.blockSizeVertical * 6.0)),
+              Divider(thickness: 2.0),
+              Flexible(
+                  child: Scrollbar(
+                      child: GridView.count(
+                primary: false,
+                padding: const EdgeInsets.all(20),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: isLandscape() ? 5 : 3,
+                children: getCoinsMenu(),
+                childAspectRatio: 1,
+              ))),
+              Divider(thickness: 2.0),
+              RaisedButton(
+                  onPressed: () {
+                    closeToPayScreen(context);
+                  },
+                  textColor: Colors.white,
+                  color: Colors.green,
+                  padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.blockSizeVertical * 2.0,
+                      horizontal: SizeConfig.blockSizeHorizontal * 4.0),
+                  child: Text('Betaling voltooid',
+                      style: TextStyle(
+                          fontSize: SizeConfig.blockSizeVertical * 4)),
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
+                  )),
+              SizedBox(height: SizeConfig.blockSizeVertical * 1),
+            ],
+          ));
+    }));
   }
 
   void pay() {
@@ -305,49 +310,63 @@ class PayingState extends State {
       showDialog(
           context: context,
           builder: (_) => new AlertDialog(
-                title: Text("Veld is leeg", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
-                content: Text("Toets het te betalen bedrag in het veld.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                title: Text("Veld is leeg",
+                    style: TextStyle(
+                        fontSize: SizeConfig.blockSizeVertical * 5.0)),
+                content: Text("Toets het te betalen bedrag in het veld.",
+                    style: TextStyle(
+                        fontSize: SizeConfig.blockSizeVertical * 3.0)),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Sluiten', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                    child: Text('Sluiten',
+                        style: TextStyle(
+                            fontSize: SizeConfig.blockSizeVertical * 3.0)),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                   )
                 ],
-          ));
+              ));
     } else {
       // Start the paying algorithm
       var moneyInPocket = new Map<String, int>.from(appData.currentMoney);
 
       try {
-        var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
+        var moneyToPay =
+            double.parse(moneyController.text.replaceAll(',', '.'));
         print('Money to pay: ' + euroFormatter.format(moneyToPay));
         appData.splitMoney = calculate(moneyInPocket, moneyToPay);
 
         if (appData.splitMoney != null) {
           appData.toPay = moneyToPay;
-          appData.splitMoneyTotal = calculateIntegerCoinsValue(appData.splitMoney) / 100;
+          appData.splitMoneyTotal =
+              calculateIntegerCoinsValue(appData.splitMoney) / 100;
           print("-------------------");
           printMoney(appData.splitMoney);
           openToPayScreen();
         }
-      }
-      on FormatException catch(e) {
+      } on FormatException catch (e) {
         showDialog(
             context: context,
             builder: (_) => new AlertDialog(
-              title: Text("Ongeldige waarde", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
-              content: Text("Het bedrag in het veld is niet geldig!\nControleer dat er geen meerdere komma's in het bedrag voorkomen en probeer opnieuw.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Sluiten', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            ));
+                  title: Text("Ongeldige waarde",
+                      style: TextStyle(
+                          fontSize: SizeConfig.blockSizeVertical * 5.0)),
+                  content: Text(
+                      "Het bedrag in het veld is niet geldig!\nControleer dat er geen meerdere komma's in het bedrag voorkomen en probeer opnieuw.",
+                      style: TextStyle(
+                          fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Sluiten',
+                          style: TextStyle(
+                              fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ));
       }
     }
   }
@@ -413,43 +432,25 @@ class PayingState extends State {
     showDialog(
         context: context,
         builder: (_) => new AlertDialog(
-          title: new Text("Niet genoeg geld!", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
-          content: new Text(
-              "Je hebt momenteel: " + euroFormatter.format(moneyInPocketInCents / 100) + "\nVoeg geld toe in de tab: 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Sluiten', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        )
-    );
-  }
-}
-
-class DecimalTextInputFormatter extends TextInputFormatter {
-  DecimalTextInputFormatter({int decimalRange})
-      : assert(decimalRange == null || decimalRange >= 0,
-            'DecimalTextInputFormatter declaration error') {
-    String dp = (decimalRange != null && decimalRange > 0)
-        ? "([.|,][0-9]{0,$decimalRange}){0,1}"
-        : "";
-    String num = "[0-9]*$dp";
-    _exp = new RegExp("^($num){0,1}\$");
-  }
-
-  RegExp _exp;
-
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    if (_exp.hasMatch(newValue.text)) {
-      return newValue;
-    }
-    return oldValue;
+              title: new Text("Niet genoeg geld!",
+                  style:
+                      TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
+              content: new Text(
+                  "Je hebt momenteel: " +
+                      euroFormatter.format(moneyInPocketInCents / 100) +
+                      "\nVoeg geld toe in de tab: 'Geld toevoegen'.",
+                  style:
+                      TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Sluiten',
+                      style: TextStyle(
+                          fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ));
   }
 }

@@ -32,7 +32,9 @@ class MoneyGridState extends State {
             child: Text(
               '${appData.currentMoney[describeEnum(coin)]} x ',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: SizeConfig.blockSizeVertical * 5.0),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: SizeConfig.blockSizeVertical * 5.0),
             )),
         Image(
           image: appData.images[coin].image,

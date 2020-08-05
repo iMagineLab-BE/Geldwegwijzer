@@ -58,8 +58,7 @@ int calculateIntegerCoinsValue(Map<String, int> coinMap) {
   int totalValue = 0;
 
   Coin.values.forEach((coin) {
-    totalValue +=
-        coinMap[describeEnum(coin)] * coinToValue(coin);
+    totalValue += coinMap[describeEnum(coin)] * coinToValue(coin);
   });
 
   return totalValue;
@@ -97,7 +96,7 @@ class AppData {
     await storage.ready; // Waiting for the local storage is be ready
     Map<String, dynamic> moneyData = storage.getItem('money');
 
-    if(moneyData == null) {
+    if (moneyData == null) {
       print('Initialising local storage...');
       moneyData = initMoneyMap();
 

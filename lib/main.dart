@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geldwegwijzer/about_app.dart';
 import 'package:geldwegwijzer/app_data.dart';
 import 'package:geldwegwijzer/money_grid.dart';
 import 'package:geldwegwijzer/paying.dart';
 import 'package:geldwegwijzer/sizeconfig.dart';
-import 'package:geldwegwijzer/about_app.dart';
 
 void main() {
   runApp(MyApp());
@@ -45,8 +45,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  static TextStyle bottomStyle =
-      TextStyle(fontSize: SizeConfig.blockSizeVertical * 2.0, fontWeight: FontWeight.normal);
+  static TextStyle bottomStyle = TextStyle(
+      fontSize: SizeConfig.blockSizeVertical * 2.0,
+      fontWeight: FontWeight.normal);
 
   static const List<Widget> _widgetOptions = <Widget>[
     Paying(),
@@ -64,12 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: FittedBox(
-          child: Text(
-            'Geldwegwijzer',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          fit: BoxFit.scaleDown
-        ),
+            child: Text(
+              'Geldwegwijzer',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+            fit: BoxFit.scaleDown),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.info),
@@ -90,7 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text('Betalen', style: bottomStyle),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.euro_symbol, size: SizeConfig.blockSizeVertical * 4.0),
+            icon: Icon(Icons.euro_symbol,
+                size: SizeConfig.blockSizeVertical * 4.0),
             title: Text('Geld toevoegen', style: bottomStyle),
           ),
         ],
