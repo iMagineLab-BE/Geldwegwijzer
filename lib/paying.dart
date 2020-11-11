@@ -373,6 +373,15 @@ class PayingState extends State {
 
   Map<String, int> calculate(
       Map<String, int> moneyInPocket, double moneyToPay) {
+    int moneyToPayInCents = (moneyToPay * 100).truncate();
+    int moneyInPocketInCents = calculateIntegerCoinsValue(moneyInPocket);
+
+    if (moneyInPocketInCents < moneyToPayInCents) {
+      print("Not enough money!");
+      showNotEnoughMoney(moneyInPocketInCents);
+      return null;
+    }
+
     var bills = <int>[];
     // add largest bills first
     Coin.values.reversed.forEach((coin) {
@@ -383,7 +392,7 @@ class PayingState extends State {
         }
       }
     });
-    var bestSub = coverAmount((moneyToPay * 100).truncate(), bills, null);
+    var bestSub = coverAmount(moneyToPayInCents, bills, null);
     var moneySplit = initMoneyMap();
     bestSub.forEach((bill) {
       var coin = valueToCoin(bill);
