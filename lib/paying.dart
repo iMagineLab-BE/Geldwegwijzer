@@ -335,7 +335,7 @@ class PayingState extends State {
         var moneyToPay =
             double.parse(moneyController.text.replaceAll(',', '.'));
         print('Money to pay: ' + euroFormatter.format(moneyToPay));
-        appData.splitMoney = calculate(moneyInPocket, moneyToPay);
+        appData.splitMoney = calculate2(moneyInPocket, moneyToPay);
 
         if (appData.splitMoney != null) {
           appData.toPay = moneyToPay;
