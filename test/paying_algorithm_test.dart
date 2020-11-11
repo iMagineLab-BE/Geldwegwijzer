@@ -7,9 +7,22 @@ void main() {
   group('Paying Algorithm', () {
     var payingState = PayingState();
 
+    test('Test 0 - not enough money', () {
+      var moneyInPocket = initMoneyMap(); // cleanup method
+      double moneyToPay = 1.00;
+      print('Money to pay: ' + euroFormatter.format(moneyToPay));
+
+      var splitMoney = payingState.calculate(moneyInPocket, moneyToPay);
+
+      print('Total money in pocket left: ' +
+          euroFormatter
+              .format(calculateIntegerCoinsValue(moneyInPocket) / 100));
+
+      expect(splitMoney, null);
+    });
+
     test('Test 1 - exact amount', () {
-      var moneyInPocket =
-          appData.currentMoney = initMoneyMap(); // cleanup method
+      var moneyInPocket = initMoneyMap(); // cleanup method
       moneyInPocket[describeEnum(Coin.n1Euro)] = 3;
       moneyInPocket[describeEnum(Coin.n2Euro)] = 3;
       double moneyToPay = 5.00;
@@ -31,8 +44,7 @@ void main() {
     });
 
     test('Test 2 - not exact amount', () {
-      var moneyInPocket =
-          appData.currentMoney = initMoneyMap(); // cleanup method
+      var moneyInPocket = initMoneyMap(); // cleanup method
       moneyInPocket[describeEnum(Coin.n1Euro)] = 3;
       moneyInPocket[describeEnum(Coin.n2Euro)] = 3;
       double moneyToPay = 5.55;
@@ -54,8 +66,7 @@ void main() {
     });
 
     test('Test 3 - not exact amount', () {
-      var moneyInPocket =
-          appData.currentMoney = initMoneyMap(); // cleanup method
+      var moneyInPocket = initMoneyMap(); // cleanup method
       moneyInPocket[describeEnum(Coin.n2Euro)] = 1;
       moneyInPocket[describeEnum(Coin.n5Euro)] = 1;
       moneyInPocket[describeEnum(Coin.n100Euro)] = 1;
@@ -80,8 +91,7 @@ void main() {
     });
 
     test('Test 4 - not exact amount', () {
-      var moneyInPocket =
-          appData.currentMoney = initMoneyMap(); // cleanup method
+      var moneyInPocket = initMoneyMap(); // cleanup method
       moneyInPocket[describeEnum(Coin.n2Euro)] = 1;
       moneyInPocket[describeEnum(Coin.n5Euro)] = 1;
       moneyInPocket[describeEnum(Coin.n100Euro)] = 2;
@@ -103,6 +113,31 @@ void main() {
       expect(moneyInPocket[describeEnum(Coin.n2Euro)], 1); // ideal: 1
       expect(moneyInPocket[describeEnum(Coin.n5Euro)], 1); // ideal: 1
       expect(moneyInPocket[describeEnum(Coin.n100Euro)], 0); // ideal: 0
+    });
+
+    test('Test 5 - not exact amount', () {
+      var moneyInPocket = initMoneyMap(); // cleanup method
+      moneyInPocket[describeEnum(Coin.n5Euro)] = 3;
+      moneyInPocket[describeEnum(Coin.n10Euro)] = 3;
+      moneyInPocket[describeEnum(Coin.n100Euro)] = 3;
+      double moneyToPay = 14.00;
+      print('Money to pay: ' + euroFormatter.format(moneyToPay));
+
+      var splitMoney = payingState.calculate(moneyInPocket, moneyToPay);
+
+      print('Total split money to pay: ' +
+          euroFormatter.format(calculateIntegerCoinsValue(splitMoney) / 100));
+      print('Total money in pocket left: ' +
+          euroFormatter
+              .format(calculateIntegerCoinsValue(moneyInPocket) / 100));
+
+      expect(splitMoney[describeEnum(Coin.n5Euro)], 1); // ideal: 1
+      expect(splitMoney[describeEnum(Coin.n10Euro)], 1); // ideal: 1
+      expect(splitMoney[describeEnum(Coin.n100Euro)], 0); // ideal: 0
+
+      expect(moneyInPocket[describeEnum(Coin.n5Euro)], 2); // ideal: 2
+      expect(moneyInPocket[describeEnum(Coin.n10Euro)], 2); // ideal: 2
+      expect(moneyInPocket[describeEnum(Coin.n100Euro)], 3); // ideal: 3
     });
   });
 }

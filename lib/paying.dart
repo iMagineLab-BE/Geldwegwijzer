@@ -335,15 +335,20 @@ class PayingState extends State {
         var moneyToPay =
             double.parse(moneyController.text.replaceAll(',', '.'));
         print('Money to pay: ' + euroFormatter.format(moneyToPay));
-        appData.splitMoney = calculate2(moneyInPocket, moneyToPay);
+        var moneySplit = calculate(moneyInPocket, moneyToPay);
 
-        if (appData.splitMoney != null) {
+        if (moneySplit != null) {
+          appData.currentMoney = moneyInPocket;
+          AppData.saveState();
+          appData.splitMoney = moneySplit;
           appData.toPay = moneyToPay;
           appData.splitMoneyTotal =
               calculateIntegerCoinsValue(appData.splitMoney) / 100;
           print("-------------------");
           printMoney(appData.splitMoney);
           openToPayScreen();
+        } else {
+          showNotEnoughMoney(calculateIntegerCoinsValue(moneyInPocket));
         }
       } on FormatException catch (e) {
         showDialog(
@@ -378,7 +383,6 @@ class PayingState extends State {
 
     if (moneyInPocketInCents < moneyToPayInCents) {
       print("Not enough money!");
-      showNotEnoughMoney(moneyInPocketInCents);
       return null;
     }
 
@@ -401,8 +405,6 @@ class PayingState extends State {
         moneyInPocket[describeEnum(coin)]--;
       }
     });
-    appData.currentMoney = moneyInPocket;
-    AppData.saveState();
     return moneySplit;
   }
 
@@ -448,11 +450,11 @@ class PayingState extends State {
     // sort on least amount of bills
     overages.sort((a, b) => customCompareTo(a, b));
     // if overage is less than half of the amount, take that one
-    overages.forEach((element) {
+    for (var element in overages) {
       if (element.value <= amount / 2) {
         return element.key;
       }
-    });
+    }
     return overages.first.key; // take the one with least amount of bills
     //
   }
@@ -464,64 +466,6 @@ class PayingState extends State {
       compareTo = a.value.compareTo(b.value);
     }
     return compareTo;
-  }
-
-  // Old / Original algo
-  Map<String, int> calculate2(
-      Map<String, int> moneyInPocket, double moneyToPay) {
-    var moneySplit = initMoneyMap();
-    int moneyToPayInCents = (moneyToPay * 100).truncate();
-    int initialMoneyToPayInCents = moneyToPayInCents;
-    int moneyInPocketInCents = calculateIntegerCoinsValue(moneyInPocket);
-
-    if (moneyInPocketInCents < moneyToPayInCents) {
-      print("Not enough money!");
-      showNotEnoughMoney(moneyInPocketInCents);
-      moneySplit = null;
-    } else {
-      while (moneyToPayInCents > 0) {
-        bool stuck = true;
-        for (Coin coin in Coin.values.reversed) {
-          if (moneyInPocket[describeEnum(coin)] > 0 &&
-              coinToValue(coin) <= moneyToPayInCents) {
-            //print(describeEnum(coin));
-            //print(moneySplit[describeEnum(coin)]);
-            moneySplit[describeEnum(coin)]++;
-            moneyInPocket[describeEnum(coin)]--;
-            moneyToPayInCents -= coinToValue(coin);
-            stuck = false;
-            break;
-          }
-        }
-        if (stuck) {
-          moneyToPayInCents = (moneyToPay * 100).truncate();
-          for (Coin coin in Coin.values) {
-            if (moneyInPocket[describeEnum(coin)] > 0) {
-              if (coinToValue(coin) > initialMoneyToPayInCents) {
-                moneyInPocket = new Map.from(appData.currentMoney);
-                moneySplit = initMoneyMap();
-                //print(describeEnum(coin));
-                moneySplit[describeEnum(coin)]++;
-                moneyInPocket[describeEnum(coin)]--;
-                moneyToPayInCents =
-                    initialMoneyToPayInCents - coinToValue(coin);
-              } else {
-                //print(describeEnum(coin));
-                moneySplit[describeEnum(coin)]++;
-                moneyInPocket[describeEnum(coin)]--;
-                moneyToPayInCents -= coinToValue(coin);
-              }
-              appData.currentMoney = moneyInPocket;
-              AppData.saveState();
-              return moneySplit;
-            }
-          }
-        }
-      }
-      appData.currentMoney = moneyInPocket;
-      AppData.saveState();
-    }
-    return moneySplit;
   }
 
   showNotEnoughMoney(moneyInPocketInCents) {
