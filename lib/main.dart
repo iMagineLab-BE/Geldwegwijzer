@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           backwardsCompatibility: false,
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.light,
           ),
         ),
