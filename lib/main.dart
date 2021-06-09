@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geldwegwijzer/about_app.dart';
 import 'package:geldwegwijzer/app_data.dart';
 import 'package:geldwegwijzer/money_grid.dart';
@@ -18,6 +19,13 @@ class MyApp extends StatelessWidget {
       title: 'Geldwegwijzer',
       theme: ThemeData(
         primarySwatch: Colors.green,
+        appBarTheme: AppBarTheme(
+          backwardsCompatibility: false,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.light,
+          ),
+        ),
       ),
       home: MyHomePage(title: 'Geldwegwijzer'),
     );
