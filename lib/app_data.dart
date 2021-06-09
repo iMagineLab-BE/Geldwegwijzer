@@ -47,6 +47,35 @@ int coinToValue(Coin coin) {
   }
 }
 
+Coin valueToCoin(int value) {
+  switch (value) {
+    case 5:
+      return Coin.n5Cent;
+    case 10:
+      return Coin.n10Cent;
+    case 20:
+      return Coin.n20Cent;
+    case 50:
+      return Coin.n50Cent;
+    case 100:
+      return Coin.n1Euro;
+    case 200:
+      return Coin.n2Euro;
+    case 500:
+      return Coin.n5Euro;
+    case 1000:
+      return Coin.n10Euro;
+    case 2000:
+      return Coin.n20Euro;
+    case 5000:
+      return Coin.n50Euro;
+    case 10000:
+      return Coin.n100Euro;
+    default:
+      return null;
+  }
+}
+
 void printMoney(Map money) {
   print("MONEY OVERVIEW:");
   money.forEach((key, value) {

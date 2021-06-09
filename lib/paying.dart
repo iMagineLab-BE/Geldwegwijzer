@@ -335,7 +335,7 @@ class PayingState extends State {
         var moneyToPay =
             double.parse(moneyController.text.replaceAll(',', '.'));
         print('Money to pay: ' + euroFormatter.format(moneyToPay));
-        appData.splitMoney = calculate(moneyInPocket, moneyToPay);
+        appData.splitMoney = calculate2(moneyInPocket, moneyToPay);
 
         if (appData.splitMoney != null) {
           appData.toPay = moneyToPay;
@@ -372,6 +372,102 @@ class PayingState extends State {
   }
 
   Map<String, int> calculate(
+      Map<String, int> moneyInPocket, double moneyToPay) {
+    int moneyToPayInCents = (moneyToPay * 100).truncate();
+    int moneyInPocketInCents = calculateIntegerCoinsValue(moneyInPocket);
+
+    if (moneyInPocketInCents < moneyToPayInCents) {
+      print("Not enough money!");
+      showNotEnoughMoney(moneyInPocketInCents);
+      return null;
+    }
+
+    var bills = <int>[];
+    // add largest bills first
+    Coin.values.reversed.forEach((coin) {
+      var amountPerCoin = moneyInPocket[describeEnum(coin)];
+      if (amountPerCoin != 0) {
+        for (int i = 0; i < amountPerCoin; i++) {
+          bills.add(coinToValue(coin));
+        }
+      }
+    });
+    var bestSub = coverAmount(moneyToPayInCents, bills, null);
+    var moneySplit = initMoneyMap();
+    bestSub.forEach((bill) {
+      var coin = valueToCoin(bill);
+      if (coin != null) {
+        moneySplit[describeEnum(coin)]++;
+        moneyInPocket[describeEnum(coin)]--;
+      }
+    });
+    appData.currentMoney = moneyInPocket;
+    AppData.saveState();
+    return moneySplit;
+  }
+
+  // Source algo: https://stackoverflow.com/questions/37326105/find-the-optimal-bills-combination-to-pay-for-a-specific-value
+  List<int> coverAmount(int amount, List<int> bills, Set<int> used) {
+    if (used == null) {
+      used = Set<int>();
+    }
+    if (amount <= 0) {
+      return <int>[];
+    }
+
+    var overages = List<MapEntry<List<int>, int>>();
+    for (int i = 0; i < bills.length; i++) {
+      var bill = bills[i];
+      if (used.contains(i)) {
+        continue;
+      }
+
+      if (bill > amount) {
+        overages.add(MapEntry([bill], bill - amount));
+      } else if (bill == amount) {
+        return [bill];
+      } else {
+        used.add(i);
+        var bestSub = coverAmount(amount - bill, bills, used);
+        used.remove(i);
+        bestSub.add(bill);
+        var sum = bestSub.reduce((a, b) => a + b); // sum of
+        if (sum == amount) {
+          return bestSub;
+        }
+        if (sum > amount) {
+          overages.add(MapEntry(bestSub, sum - amount));
+        }
+      }
+    }
+
+    if (overages.isEmpty) {
+      return <int>[];
+    }
+
+    // sort on least amount of bills
+    overages.sort((a, b) => customCompareTo(a, b));
+    // if overage is less than half of the amount, take that one
+    overages.forEach((element) {
+      if (element.value <= amount / 2) {
+        return element.key;
+      }
+    });
+    return overages.first.key; // take the one with least amount of bills
+    //
+  }
+
+  // Least amount of bills put first. If equal, least overage.
+  int customCompareTo(MapEntry<List, int> a, MapEntry<List, int> b) {
+    var compareTo = a.key.length.compareTo(b.key.length);
+    if (compareTo == 0) {
+      compareTo = a.value.compareTo(b.value);
+    }
+    return compareTo;
+  }
+
+  // Old / Original algo
+  Map<String, int> calculate2(
       Map<String, int> moneyInPocket, double moneyToPay) {
     var moneySplit = initMoneyMap();
     int moneyToPayInCents = (moneyToPay * 100).truncate();
