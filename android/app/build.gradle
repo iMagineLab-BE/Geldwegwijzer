@@ -54,7 +54,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "club.imaginelab.geldwegwijzer"
         minSdkVersion 16
         targetSdkVersion 29
