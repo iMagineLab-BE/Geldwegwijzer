@@ -37,7 +37,7 @@ class MoneyGridState extends State {
                   fontSize: SizeConfig.blockSizeVertical * 5.0),
             )),
         Image(
-          image: appData.images[coin].image,
+          image: appData.images[coin]!.image,
           fit: BoxFit.fitWidth,
           // todo 1: use coins of the same resolution, some are blurry
           // todo 2: instant image loading, tip: precacheImage function

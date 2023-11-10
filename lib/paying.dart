@@ -20,9 +20,9 @@ class PayingState extends State {
     var widgets = new List<Widget>();
     Coin.values.forEach((coin) {
       widgets.addAll([
-        for (var i = 0; i < appData.splitMoney[describeEnum(coin)]; i++)
+        for (var i = 0; i < appData.splitMoney[describeEnum(coin)]!; i++)
           Image(
-            image: appData.images[coin].image,
+            image: appData.images[coin]!.image,
             fit: BoxFit.fitWidth,
           ),
       ]);
@@ -68,7 +68,7 @@ class PayingState extends State {
                           size: SizeConfig.blockSizeVertical * 4)),
                 )),
             SizedBox(height: SizeConfig.blockSizeVertical * 2.0),
-            RaisedButton(
+            ElevatedButton(
                 onPressed: () {
                   pay();
                 },
@@ -114,7 +114,7 @@ class PayingState extends State {
                           size: SizeConfig.blockSizeVertical * 4)),
                 )),
             SizedBox(width: SizeConfig.blockSizeHorizontal * 2.0),
-            RaisedButton(
+            ElevatedButton(
                 onPressed: () {
                   pay();
                 },
@@ -188,7 +188,7 @@ class PayingState extends State {
                     style: TextStyle(
                         fontSize: SizeConfig.blockSizeVertical * 3.0)),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text('Wisselgeld toevoegen',
                         style: TextStyle(
                             fontSize: SizeConfig.blockSizeVertical * 3.0)),
@@ -246,7 +246,7 @@ class PayingState extends State {
                 childAspectRatio: 1,
               ))),
               Divider(thickness: 2.0),
-              RaisedButton(
+              ElevatedButton(
                   onPressed: () {
                     closeToPayScreen(context);
                   },
@@ -317,7 +317,7 @@ class PayingState extends State {
                     style: TextStyle(
                         fontSize: SizeConfig.blockSizeVertical * 3.0)),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text('Sluiten',
                         style: TextStyle(
                             fontSize: SizeConfig.blockSizeVertical * 3.0)),
@@ -337,7 +337,7 @@ class PayingState extends State {
         print('Money to pay: ' + euroFormatter.format(moneyToPay));
         appData.splitMoney = calculate2(moneyInPocket, moneyToPay);
 
-        if (appData.splitMoney != null) {
+        if (appData.splitMoney.isEmpty) {
           appData.toPay = moneyToPay;
           appData.splitMoneyTotal =
               calculateIntegerCoinsValue(appData.splitMoney) / 100;
@@ -357,7 +357,7 @@ class PayingState extends State {
                       style: TextStyle(
                           fontSize: SizeConfig.blockSizeVertical * 3.0)),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text('Sluiten',
                           style: TextStyle(
                               fontSize: SizeConfig.blockSizeVertical * 3.0)),
@@ -387,7 +387,7 @@ class PayingState extends State {
     Coin.values.reversed.forEach((coin) {
       var amountPerCoin = moneyInPocket[describeEnum(coin)];
       if (amountPerCoin != 0) {
-        for (int i = 0; i < amountPerCoin; i++) {
+        for (int i = 0; i < amountPerCoin!; i++) {
           bills.add(coinToValue(coin));
         }
       }
@@ -408,7 +408,7 @@ class PayingState extends State {
 
   // Source algo: https://stackoverflow.com/questions/37326105/find-the-optimal-bills-combination-to-pay-for-a-specific-value
   List<int> coverAmount(int amount, List<int> bills, Set<int> used) {
-    if (used == null) {
+    if (used.isEmpty) {
       used = Set<int>();
     }
     if (amount <= 0) {
@@ -538,7 +538,7 @@ class PayingState extends State {
                   style:
                       TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text('Sluiten',
                       style: TextStyle(
                           fontSize: SizeConfig.blockSizeVertical * 3.0)),

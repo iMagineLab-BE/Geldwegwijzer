@@ -85,7 +85,7 @@ class BackspaceButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             vertical: SizeConfig.blockSizeVertical * 0.5,
             horizontal: SizeConfig.blockSizeHorizontal * 0.5),
-        child: RaisedButton(
+        child: ElevatedButton(
             onPressed: () {
               onPress();
             },
@@ -124,7 +124,7 @@ class KeyboardButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             vertical: SizeConfig.blockSizeVertical * 0.5,
             horizontal: SizeConfig.blockSizeHorizontal * 0.5),
-        child: RaisedButton(
+        child: ElevatedButton(
             onPressed: () {
               onPress(value);
             },

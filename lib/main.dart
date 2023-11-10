@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
         appBarTheme: AppBarTheme(
-          backwardsCompatibility: false,
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarIconBrightness: Brightness.light,
           ),
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -94,12 +93,12 @@ class _MyHomePageState extends State<MyHomePage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.payment, size: SizeConfig.blockSizeVertical * 4.0),
-            title: Text('Betalen', style: bottomStyle),
+            label: 'Betalen',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.euro_symbol,
                 size: SizeConfig.blockSizeVertical * 4.0),
-            title: Text('Geld toevoegen', style: bottomStyle),
+            label: 'Geld toevoegen',
           ),
         ],
         currentIndex: _selectedIndex,
