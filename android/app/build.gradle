@@ -37,13 +37,18 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
-apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -55,11 +60,12 @@ android {
 
     defaultConfig {
         applicationId "club.imaginelab.geldwegwijzer"
-        minSdkVersion 16
-        targetSdkVersion 31
+        minSdkVersion 21
+        targetSdkVersion 33
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -74,6 +80,9 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
         release {
             minifyEnabled true
@@ -95,9 +104,9 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.android.gms:play-services-basement:17.6.0'
+    implementation platform('com.google.firebase:firebase-bom:28.3.0')
+    implementation 'com.google.firebase:firebase-crashlytics'
 }

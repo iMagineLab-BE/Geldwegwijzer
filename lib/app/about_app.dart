@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:geldwegwijzer/sizeconfig.dart';
+import 'package:geldwegwijzer/model/sizeconfig.dart';
 import 'package:package_info/package_info.dart';
 
 Future<void> openAboutApp(BuildContext context) async {

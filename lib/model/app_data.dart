@@ -110,7 +110,7 @@ class AppData {
   static final LocalStorage storage = LocalStorage('appdata.json');
 
   Map<String, int> currentMoney = Map<String, int>();
-  Map<String, int> splitMoney = Map<String, int>();
+  Map<String, int>? splitMoney = Map<String, int>();
   Map<Coin, Image> images = Map<Coin, Image>();
   double toPay = 0;
   double splitMoneyTotal = 0;
@@ -123,9 +123,9 @@ class AppData {
 
   static void _loadLocalStorage() async {
     await storage.ready; // Waiting for the local storage is be ready
-    Map<String, dynamic> moneyData = storage.getItem('money');
+    Map<String, dynamic>? moneyData = storage.getItem('money');
 
-    if (moneyData.isEmpty) {
+    if (moneyData == null || moneyData.isEmpty) {
       print('Initialising local storage...');
       moneyData = initMoneyMap();
 
@@ -140,7 +140,7 @@ class AppData {
   }
 
   void increaseCoin(Coin coin) {
-    currentMoney[describeEnum(coin)]++;
+    currentMoney.update(describeEnum(coin), (final value) => value + 1);
     print("Coin type: ${describeEnum(coin)}, "
         "increased to amount: ${currentMoney[describeEnum(coin)]}");
 
@@ -152,7 +152,7 @@ class AppData {
       print("Coin type: ${describeEnum(coin)}, is already 0!");
       return;
     }
-    currentMoney[describeEnum(coin)]--;
+    currentMoney.update(describeEnum(coin), (final value) => value - 1);
     print("Coin type: ${describeEnum(coin)}, "
         "decreased to amount: ${currentMoney[describeEnum(coin)]}");
 
