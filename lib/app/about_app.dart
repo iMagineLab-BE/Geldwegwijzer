@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:geldwegwijzer/sizeconfig.dart';
+import 'package:geldwegwijzer/model/sizeconfig.dart';
 import 'package:package_info/package_info.dart';
 
 Future<void> openAboutApp(BuildContext context) async {
@@ -90,8 +90,7 @@ Widget _AboutDialog(
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            if (icon != null)
-              IconTheme(data: Theme.of(context).iconTheme, child: icon),
+            IconTheme(data: Theme.of(context).iconTheme, child: icon),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -100,22 +99,22 @@ Widget _AboutDialog(
                     FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(name,
-                            style: Theme.of(context).textTheme.headline3)),
-                    Text(version, style: Theme.of(context).textTheme.bodyText2),
+                            style: Theme.of(context).textTheme.displaySmall)),
+                    Text(version, style: Theme.of(context).textTheme.bodyMedium),
                     Container(height: 18.0),
                     Text(applicationLegalese ?? '',
-                        style: Theme.of(context).textTheme.caption),
+                        style: Theme.of(context).textTheme.bodySmall),
                   ],
                 ),
               ),
             ),
           ],
         ),
-        ...?children,
+        ...children,
       ],
     ),
     actions: <Widget>[
-      FlatButton(
+      TextButton(
         child: Text(MaterialLocalizations.of(context).viewLicensesButtonLabel),
         onPressed: () {
           showLicensePage(
@@ -127,7 +126,7 @@ Widget _AboutDialog(
           );
         },
       ),
-      FlatButton(
+      TextButton(
         child: Text(MaterialLocalizations.of(context).closeButtonLabel),
         onPressed: () {
           Navigator.pop(context);

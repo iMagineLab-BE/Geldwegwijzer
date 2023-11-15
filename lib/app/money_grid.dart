@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:geldwegwijzer/app_data.dart';
-import 'package:geldwegwijzer/sizeconfig.dart';
+import 'package:geldwegwijzer/model/app_data.dart';
+import 'package:geldwegwijzer/model/sizeconfig.dart';
 
 class MoneyGrid extends StatefulWidget {
   const MoneyGrid();
@@ -11,10 +11,10 @@ class MoneyGrid extends StatefulWidget {
 }
 
 class MoneyGridState extends State {
-  Function(String) onSelectParam;
+  late Function(String) onSelectParam;
 
   List<Widget> getCoinsMenu() {
-    var widgets = new List<Widget>();
+    final List<Widget> widgets = [];
     Coin.values.forEach((coin) {
       widgets.addAll([
         IconButton(
@@ -32,12 +32,10 @@ class MoneyGridState extends State {
             child: Text(
               '${appData.currentMoney[describeEnum(coin)]} x ',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: SizeConfig.blockSizeVertical * 5.0),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: SizeConfig.blockSizeVertical * 5.0),
             )),
         Image(
-          image: appData.images[coin].image,
+          image: appData.images[coin]!.image,
           fit: BoxFit.fitWidth,
           // todo 1: use coins of the same resolution, some are blurry
           // todo 2: instant image loading, tip: precacheImage function
