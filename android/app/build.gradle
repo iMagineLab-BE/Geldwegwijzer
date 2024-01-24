@@ -85,8 +85,7 @@ android {
             }
         }
         release {
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
             signingConfig signingConfigs.release
         }
     }

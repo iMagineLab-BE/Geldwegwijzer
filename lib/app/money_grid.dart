@@ -15,10 +15,10 @@ class MoneyGridState extends State {
 
   List<Widget> getCoinsMenu() {
     final List<Widget> widgets = [];
-    Coin.values.forEach((coin) {
+    for (final coin in Coin.values) {
       widgets.addAll([
         IconButton(
-          icon: Icon(Icons.remove_circle_outline),
+          icon: const Icon(Icons.remove_circle_outline),
           iconSize: SizeConfig.blockSizeVertical * 8.0,
           tooltip: 'Verwijder 1',
           onPressed: () {
@@ -30,7 +30,7 @@ class MoneyGridState extends State {
         Align(
             alignment: Alignment.center,
             child: Text(
-              '${appData.currentMoney[describeEnum(coin)]} x ',
+              '${appData.currentMoney[coin.name]} x ',
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: SizeConfig.blockSizeVertical * 5.0),
             )),
@@ -42,7 +42,7 @@ class MoneyGridState extends State {
           // todo 2 (plan B: https://flutter.dev/docs/cookbook/images/fading-in-images)
         ),
         IconButton(
-          icon: Icon(Icons.add_circle_outline),
+          icon: const Icon(Icons.add_circle_outline),
           iconSize: SizeConfig.blockSizeVertical * 8.0,
           tooltip: 'Voeg 1 toe',
           onPressed: () {
@@ -52,12 +52,12 @@ class MoneyGridState extends State {
           },
         )
       ]);
-    });
+    }
     return widgets;
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
         body: GridView.count(
       primary: false,

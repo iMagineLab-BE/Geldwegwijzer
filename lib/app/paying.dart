@@ -13,22 +13,22 @@ class Paying extends StatefulWidget {
 }
 
 class PayingState extends State {
-  TextEditingController moneyController = new TextEditingController();
+  TextEditingController moneyController = TextEditingController();
 
   List<Widget> getCoinsMenu() {
     final List<Widget> widgets = [];
-    Coin.values.forEach((coin) {
+    for (final coin in Coin.values) {
       widgets.addAll([
-        for (var i = 0; i < appData.splitMoney![describeEnum(coin)]!; i++)
+        for (var i = 0; i < appData.splitMoney![coin.name]!; i++)
           Image(
             image: appData.images[coin]!.image,
             fit: BoxFit.fitWidth,
           ),
       ]);
-    });
+    }
     if (widgets.isEmpty) {
       widgets.add(
-        Align(
+        const Align(
             alignment: Alignment.center,
             child: Text(
               "Je moet niet betalen!",
@@ -43,7 +43,7 @@ class PayingState extends State {
   Widget _amountFieldWidget() {
     if (isLandscape()) {
       return Column(children: <Widget>[
-        Spacer(),
+        const Spacer(),
         Text(
           "Hoeveel moet je betalen?",
           textAlign: TextAlign.center,
@@ -60,15 +60,15 @@ class PayingState extends State {
                   controller: moneyController,
                   textAlignVertical: TextAlignVertical.center,
                   style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
                   decoration: InputDecoration(prefixIcon: Icon(Icons.euro_symbol, size: SizeConfig.blockSizeVertical * 4)),
                 )),
             SizedBox(height: SizeConfig.blockSizeVertical * 2.0),
             ElevatedButton(
               style: ButtonStyle(
-                elevation: MaterialStatePropertyAll(3),
-                foregroundColor: MaterialStatePropertyAll(Colors.white),
-                backgroundColor: MaterialStatePropertyAll(Colors.green),
+                elevation: const MaterialStatePropertyAll(3),
+                foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                backgroundColor: const MaterialStatePropertyAll(Colors.green),
                 padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0)),
                 shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
@@ -81,7 +81,7 @@ class PayingState extends State {
             ),
           ],
         ),
-        Spacer()
+        const Spacer()
       ]);
     } else {
       return Column(children: <Widget>[
@@ -101,15 +101,15 @@ class PayingState extends State {
                   controller: moneyController,
                   textAlignVertical: TextAlignVertical.center,
                   style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 4),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
                   decoration: InputDecoration(prefixIcon: Icon(Icons.euro_symbol, size: SizeConfig.blockSizeVertical * 4)),
                 )),
             SizedBox(width: SizeConfig.blockSizeHorizontal * 2.0),
             ElevatedButton(
               style: ButtonStyle(
-                elevation: MaterialStatePropertyAll(3),
-                foregroundColor: MaterialStatePropertyAll(Colors.white),
-                backgroundColor: MaterialStatePropertyAll(Colors.green),
+                elevation: const MaterialStatePropertyAll(3),
+                foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                backgroundColor: const MaterialStatePropertyAll(Colors.green),
                 padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0)),
                 shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
@@ -131,16 +131,16 @@ class PayingState extends State {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     if (isLandscape()) {
       return Scaffold(
           body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Spacer(),
+            const Spacer(),
             _amountFieldWidget(),
-            Spacer(),
+            const Spacer(),
             NumericKeyboard(moneyController),
           ],
         ),
@@ -151,9 +151,9 @@ class PayingState extends State {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Spacer(),
+            const Spacer(),
             _amountFieldWidget(),
-            Spacer(),
+            const Spacer(),
             NumericKeyboard(moneyController),
           ],
         ),
@@ -161,14 +161,14 @@ class PayingState extends State {
     }
   }
 
-  void closeToPayScreen(BuildContext context) {
+  void closeToPayScreen(final BuildContext context) {
     if (appData.toPay != appData.splitMoneyTotal) {
-      double changeMoney = appData.splitMoneyTotal - appData.toPay;
+      final double changeMoney = appData.splitMoneyTotal - appData.toPay;
       showDialog(
           context: context,
-          builder: (_) => new AlertDialog(
+          builder: (final _) => AlertDialog(
                 title: Text("Wisselgeld", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
-                content: Text("Je moet " + euroFormatter.format(changeMoney) + " terugkrijgen. Voeg de gekregen munten en biljetten in onder de tab 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+                content: Text("Je moet ${euroFormatter.format(changeMoney)} terugkrijgen. Voeg de gekregen munten en biljetten in onder de tab 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
                 actions: <Widget>[
                   TextButton(
                     child: Text('Wisselgeld toevoegen', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
@@ -187,15 +187,15 @@ class PayingState extends State {
   void openToPayScreen() {
     moneyController.clear();
 
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (final BuildContext context) {
       return Scaffold(
           appBar: AppBar(
-            title: FittedBox(
+            title: const FittedBox(
+                fit: BoxFit.scaleDown,
                 child: Text(
                   'Geldwegwijzer',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-                fit: BoxFit.scaleDown),
+                )),
             automaticallyImplyLeading: false,
             actions: <Widget>[
               IconButton(
@@ -210,8 +210,8 @@ class PayingState extends State {
           body: Column(
             children: <Widget>[
               SizedBox(height: SizeConfig.blockSizeVertical * 0.3),
-              Text("Te betalen: " + euroFormatter.format(appData.toPay), style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 6.0)),
-              Divider(thickness: 2.0),
+              Text("Te betalen: ${euroFormatter.format(appData.toPay)}", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 6.0)),
+              const Divider(thickness: 2.0),
               Flexible(
                   child: Scrollbar(
                       child: GridView.count(
@@ -220,15 +220,15 @@ class PayingState extends State {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 crossAxisCount: isLandscape() ? 5 : 3,
-                children: getCoinsMenu(),
                 childAspectRatio: 1,
+                children: getCoinsMenu(),
               ))),
-              Divider(thickness: 2.0),
+              const Divider(thickness: 2.0),
               ElevatedButton(
                 style: ButtonStyle(
-                  elevation: MaterialStatePropertyAll(3),
-                  foregroundColor: MaterialStatePropertyAll(Colors.white),
-                  backgroundColor: MaterialStatePropertyAll(Colors.green),
+                  elevation: const MaterialStatePropertyAll(3),
+                  foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                  backgroundColor: const MaterialStatePropertyAll(Colors.green),
                   padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0)),
                   shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
@@ -285,7 +285,7 @@ class PayingState extends State {
     if (moneyController.text == '') {
       showDialog(
           context: context,
-          builder: (_) => new AlertDialog(
+          builder: (final _) => AlertDialog(
                 title: Text("Veld is leeg", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
                 content: Text("Toets het te betalen bedrag in het veld.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
                 actions: <Widget>[
@@ -299,25 +299,30 @@ class PayingState extends State {
               ));
     } else {
       // Start the paying algorithm
-      var moneyInPocket = new Map<String, int>.from(appData.currentMoney);
+      final moneyInPocket = Map<String, int>.from(appData.currentMoney);
 
       try {
-        var moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
-        print('Money to pay: ' + euroFormatter.format(moneyToPay));
+        final moneyToPay = double.parse(moneyController.text.replaceAll(',', '.'));
+        if (kDebugMode) {
+          print('Money to pay: ${euroFormatter.format(moneyToPay)}');
+        }
         appData.splitMoney = calculate2(moneyInPocket, moneyToPay);
 
         // todo sdc issue here, splitmoney opt
         if (appData.splitMoney != null || appData.splitMoney!.isNotEmpty) {
           appData.toPay = moneyToPay;
           appData.splitMoneyTotal = calculateIntegerCoinsValue(appData.splitMoney!) / 100;
-          print("-------------------");
-          printMoney(appData.splitMoney!);
+          if (kDebugMode) {
+            print("-------------------");
+            printMoney(appData.splitMoney!);
+          }
+
           openToPayScreen();
         }
       } on FormatException catch (e) {
         showDialog(
             context: context,
-            builder: (_) => new AlertDialog(
+            builder: (final _) => AlertDialog(
                   title: Text("Ongeldige waarde", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
                   content: Text("Het bedrag in het veld is niet geldig!\nControleer dat er geen meerdere komma's in het bedrag voorkomen en probeer opnieuw.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
                   actions: <Widget>[
@@ -333,44 +338,44 @@ class PayingState extends State {
     }
   }
 
-  Map<String, int>? calculate(Map<String, int> moneyInPocket, double moneyToPay) {
-    int moneyToPayInCents = (moneyToPay * 100).truncate();
-    int moneyInPocketInCents = calculateIntegerCoinsValue(moneyInPocket);
+  Map<String, int>? calculate(final Map<String, int> moneyInPocket, final double moneyToPay) {
+    final int moneyToPayInCents = (moneyToPay * 100).truncate();
+    final int moneyInPocketInCents = calculateIntegerCoinsValue(moneyInPocket);
 
     if (moneyInPocketInCents < moneyToPayInCents) {
-      print("Not enough money!");
+      if (kDebugMode) {
+        print("Not enough money!");
+      }
       showNotEnoughMoney(moneyInPocketInCents);
       return null;
     }
 
-    var bills = <int>[];
+    final bills = <int>[];
     // add largest bills first
-    Coin.values.reversed.forEach((coin) {
-      var amountPerCoin = moneyInPocket[describeEnum(coin)];
+    for (final coin in Coin.values.reversed) {
+      final amountPerCoin = moneyInPocket[coin.name];
       if (amountPerCoin != 0) {
         for (int i = 0; i < amountPerCoin!; i++) {
           bills.add(coinToValue(coin));
         }
       }
-    });
-    var bestSub = coverAmount(moneyToPayInCents, bills, null);
-    var moneySplit = initMoneyMap();
-    bestSub.forEach((bill) {
-      var coin = valueToCoin(bill);
-      if (coin != null) {
-        moneySplit.update(describeEnum(coin), (value) => value + 1);
-        moneyInPocket.update(describeEnum(coin), (value) => value - 1);
-      }
-    });
+    }
+    final bestSub = coverAmount(moneyToPayInCents, bills, null);
+    final moneySplit = initMoneyMap();
+    for (final bill in bestSub) {
+      final coin = valueToCoin(bill);
+      moneySplit.update(coin.name, (final value) => value + 1);
+      moneyInPocket.update(coin.name, (final value) => value - 1);
+        }
     appData.currentMoney = moneyInPocket;
     AppData.saveState();
     return moneySplit;
   }
 
   // Source algo: https://stackoverflow.com/questions/37326105/find-the-optimal-bills-combination-to-pay-for-a-specific-value
-  List<int> coverAmount(int amount, List<int> bills, Set<int>? used) {
+  List<int> coverAmount(final int amount, final List<int> bills, Set<int>? used) {
     if (used == null || used.isEmpty) {
-      used = Set<int>();
+      used = <int>{};
     }
     if (amount <= 0) {
       return <int>[];
@@ -378,7 +383,7 @@ class PayingState extends State {
 
     final List<MapEntry<List<int>, int>> overages = [];
     for (int i = 0; i < bills.length; i++) {
-      var bill = bills[i];
+      final bill = bills[i];
       if (used.contains(i)) {
         continue;
       }
@@ -389,10 +394,10 @@ class PayingState extends State {
         return [bill];
       } else {
         used.add(i);
-        var bestSub = coverAmount(amount - bill, bills, used);
+        final bestSub = coverAmount(amount - bill, bills, used);
         used.remove(i);
         bestSub.add(bill);
-        var sum = bestSub.reduce((a, b) => a + b); // sum of
+        final sum = bestSub.reduce((final a, final b) => a + b); // sum of
         if (sum == amount) {
           return bestSub;
         }
@@ -409,7 +414,7 @@ class PayingState extends State {
     // sort on least amount of bills
     overages.sort((a, b) => customCompareTo(a, b));
     // if overage is less than half of the amount, take that one
-    for (MapEntry<List<int>, int> element in overages) {
+    for (final MapEntry<List<int>, int> element in overages) {
       if (element.value <= amount / 2) {
         return element.key;
       }
@@ -419,7 +424,7 @@ class PayingState extends State {
   }
 
   // Least amount of bills put first. If equal, least overage.
-  int customCompareTo(MapEntry<List, int> a, MapEntry<List, int> b) {
+  int customCompareTo(final MapEntry<List, int> a, final MapEntry<List, int> b) {
     var compareTo = a.key.length.compareTo(b.key.length);
     if (compareTo == 0) {
       compareTo = a.value.compareTo(b.value);
@@ -428,25 +433,27 @@ class PayingState extends State {
   }
 
   // Old / Original algo
-  Map<String, int>? calculate2(Map<String, int> moneyInPocket, double moneyToPay) {
+  Map<String, int>? calculate2(Map<String, int> moneyInPocket, final double moneyToPay) {
     Map<String, int>? moneySplit = initMoneyMap();
     int moneyToPayInCents = (moneyToPay * 100).truncate();
-    int initialMoneyToPayInCents = moneyToPayInCents;
-    int moneyInPocketInCents = calculateIntegerCoinsValue(moneyInPocket);
+    final int initialMoneyToPayInCents = moneyToPayInCents;
+    final int moneyInPocketInCents = calculateIntegerCoinsValue(moneyInPocket);
 
     if (moneyInPocketInCents < moneyToPayInCents) {
-      print("Not enough money!");
+      if (kDebugMode) {
+        print("Not enough money!");
+      }
       showNotEnoughMoney(moneyInPocketInCents);
       moneySplit = null;
     } else {
       while (moneyToPayInCents > 0) {
         bool stuck = true;
-        for (Coin coin in Coin.values.reversed) {
-          if (moneyInPocket[describeEnum(coin)]! > 0 && coinToValue(coin) <= moneyToPayInCents) {
+        for (final Coin coin in Coin.values.reversed) {
+          if (moneyInPocket[coin.name]! > 0 && coinToValue(coin) <= moneyToPayInCents) {
             //print(describeEnum(coin));
             //print(moneySplit[describeEnum(coin)]);
-            moneySplit?.update(describeEnum(coin), (value) => value + 1);
-            moneyInPocket.update(describeEnum(coin), (value) => value - 1);
+            moneySplit?.update(coin.name, (final value) => value + 1);
+            moneyInPocket.update(coin.name, (final value) => value - 1);
             moneyToPayInCents -= coinToValue(coin);
             stuck = false;
             break;
@@ -454,19 +461,19 @@ class PayingState extends State {
         }
         if (stuck) {
           moneyToPayInCents = (moneyToPay * 100).truncate();
-          for (Coin coin in Coin.values) {
-            if (moneyInPocket[describeEnum(coin)]! > 0) {
+          for (final Coin coin in Coin.values) {
+            if (moneyInPocket[coin.name]! > 0) {
               if (coinToValue(coin) > initialMoneyToPayInCents) {
-                moneyInPocket = new Map.from(appData.currentMoney);
+                moneyInPocket = Map.from(appData.currentMoney);
                 moneySplit = initMoneyMap();
                 //print(describeEnum(coin));
-                moneySplit.update(describeEnum(coin), (value) => value + 1);
-                moneyInPocket.update(describeEnum(coin), (value) => value - 1);
+                moneySplit.update(coin.name, (final value) => value + 1);
+                moneyInPocket.update(coin.name, (final value) => value - 1);
                 moneyToPayInCents = initialMoneyToPayInCents - coinToValue(coin);
               } else {
                 //print(describeEnum(coin));
-                moneySplit?.update(describeEnum(coin), (value) => value + 1);
-                moneyInPocket.update(describeEnum(coin), (value) => value - 1);
+                moneySplit?.update(coin.name, (final value) => value + 1);
+                moneyInPocket.update(coin.name, (final value) => value - 1);
                 moneyToPayInCents -= coinToValue(coin);
               }
               appData.currentMoney = moneyInPocket;
@@ -482,12 +489,12 @@ class PayingState extends State {
     return moneySplit;
   }
 
-  showNotEnoughMoney(moneyInPocketInCents) {
+  showNotEnoughMoney(final moneyInPocketInCents) {
     showDialog(
         context: context,
-        builder: (_) => new AlertDialog(
-              title: new Text("Niet genoeg geld!", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
-              content: new Text("Je hebt momenteel: " + euroFormatter.format(moneyInPocketInCents / 100) + "\nVoeg geld toe in de tab: 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
+        builder: (final _) => AlertDialog(
+              title: Text("Niet genoeg geld!", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5.0)),
+              content: Text("Je hebt momenteel: ${euroFormatter.format(moneyInPocketInCents / 100)}\nVoeg geld toe in de tab: 'Geld toevoegen'.", style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),
               actions: <Widget>[
                 TextButton(
                   child: Text('Sluiten', style: TextStyle(fontSize: SizeConfig.blockSizeVertical * 3.0)),

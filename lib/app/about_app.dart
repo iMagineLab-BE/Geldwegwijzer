@@ -16,6 +16,7 @@ Future<void> openAboutApp(BuildContext context) async {
                 ? SizeConfig.blockSizeVertical * 4.0
                 : SizeConfig.blockSizeVertical * 2.0)),
     Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Image.asset('assets/teamscheire_logo.png',
             width: isHorizontal
@@ -27,11 +28,10 @@ Future<void> openAboutApp(BuildContext context) async {
                 ? SizeConfig.blockSizeHorizontal * 20.0
                 : SizeConfig.blockSizeHorizontal * 30.0),
       ],
-      mainAxisAlignment: MainAxisAlignment.center,
     ),
     Row(
       children: <Widget>[
-        Spacer(),
+        const Spacer(),
         Image.asset('assets/imaginelab_logo.png',
             width: isHorizontal
                 ? SizeConfig.blockSizeHorizontal * 20.0
@@ -49,7 +49,7 @@ Future<void> openAboutApp(BuildContext context) async {
 
     appName = packageInfo.appName;
     appVersion =
-        packageInfo.version + ' (Build: ' + packageInfo.buildNumber + ')';
+        '${packageInfo.version} (Build: ${packageInfo.buildNumber})';
   }
 
   showDialog(

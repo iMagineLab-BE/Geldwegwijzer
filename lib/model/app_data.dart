@@ -18,7 +18,7 @@ enum Coin {
   n100Euro,
 }
 
-int coinToValue(Coin coin) {
+int coinToValue(final Coin coin) {
   switch (coin) {
     case Coin.n5Cent:
       return 5;
@@ -47,7 +47,7 @@ int coinToValue(Coin coin) {
   }
 }
 
-Coin valueToCoin(int value) {
+Coin valueToCoin(final int value) {
   switch (value) {
     case 5:
       return Coin.n5Cent;
@@ -76,19 +76,19 @@ Coin valueToCoin(int value) {
   }
 }
 
-void printMoney(Map money) {
+void printMoney(final Map money) {
   print("MONEY OVERVIEW:");
-  money.forEach((key, value) {
+  money.forEach((final key, final value) {
     print("$value x $key");
   });
 }
 
-int calculateIntegerCoinsValue(Map<String, int> coinMap) {
+int calculateIntegerCoinsValue(final Map<String, int> coinMap) {
   int totalValue = 0;
 
-  Coin.values.forEach((coin) {
-    totalValue += (coinMap[describeEnum(coin)]! * coinToValue(coin));
-  });
+  for (final coin in Coin.values) {
+    totalValue += (coinMap[coin.name]! * coinToValue(coin));
+  }
 
   return totalValue;
 }
@@ -96,22 +96,29 @@ int calculateIntegerCoinsValue(Map<String, int> coinMap) {
 var euroFormatter = NumberFormat.currency(symbol: "€", locale: "nl-BE");
 
 Map<String, int> initMoneyMap() {
-  Map<String, int> moneyMap = Map<String, int>();
+  final Map<String, int> moneyMap = <String, int>{};
 
-  Coin.values.forEach((coin) {
-    moneyMap[describeEnum(coin)] = 0;
-  });
+  for (final coin in Coin.values) {
+    moneyMap[coin.name] = 0;
+  }
 
   return moneyMap;
 }
 
 class AppData {
-  static final AppData _appData = new AppData._internal();
+  factory AppData() {
+    init();
+
+    return _appData;
+  }
+
+  AppData._internal();
+  static final AppData _appData = AppData._internal();
   static final LocalStorage storage = LocalStorage('appdata.json');
 
-  Map<String, int> currentMoney = Map<String, int>();
-  Map<String, int>? splitMoney = Map<String, int>();
-  Map<Coin, Image> images = Map<Coin, Image>();
+  Map<String, int> currentMoney = <String, int>{};
+  Map<String, int>? splitMoney = <String, int>{};
+  Map<Coin, Image> images = <Coin, Image>{};
   double toPay = 0;
   double splitMoneyTotal = 0;
 
@@ -126,7 +133,9 @@ class AppData {
     Map<String, dynamic>? moneyData = storage.getItem('money');
 
     if (moneyData == null || moneyData.isEmpty) {
-      print('Initialising local storage...');
+      if (kDebugMode) {
+        print('Initialising local storage...');
+      }
       moneyData = initMoneyMap();
 
       storage.setItem('money', moneyData);
@@ -139,33 +148,31 @@ class AppData {
     storage.setItem('money', _appData.currentMoney);
   }
 
-  void increaseCoin(Coin coin) {
-    currentMoney.update(describeEnum(coin), (final value) => value + 1);
-    print("Coin type: ${describeEnum(coin)}, "
-        "increased to amount: ${currentMoney[describeEnum(coin)]}");
+  void increaseCoin(final Coin coin) {
+    currentMoney.update(coin.name, (final value) => value + 1);
+    if (kDebugMode) {
+      print("Coin type: ${coin.name}, "
+        "increased to amount: ${currentMoney[coin.name]}");
+    }
 
     saveState();
   }
 
-  void decreaseCoin(Coin coin) {
-    if (currentMoney[describeEnum(coin)] == 0) {
-      print("Coin type: ${describeEnum(coin)}, is already 0!");
+  void decreaseCoin(final Coin coin) {
+    if (currentMoney[coin.name] == 0) {
+      if (kDebugMode) {
+        print("Coin type: ${coin.name}, is already 0!");
+      }
       return;
     }
-    currentMoney.update(describeEnum(coin), (final value) => value - 1);
-    print("Coin type: ${describeEnum(coin)}, "
-        "decreased to amount: ${currentMoney[describeEnum(coin)]}");
+    currentMoney.update(coin.name, (final value) => value - 1);
+    if (kDebugMode) {
+      print("Coin type: ${coin.name}, "
+        "decreased to amount: ${currentMoney[coin.name]}");
+    }
 
     saveState();
   }
-
-  factory AppData() {
-    init();
-
-    return _appData;
-  }
-
-  AppData._internal();
 }
 
 final appData = AppData();

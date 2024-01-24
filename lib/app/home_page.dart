@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geldwegwijzer/app/about_app.dart';
 import 'package:geldwegwijzer/model/app_data.dart';
@@ -17,8 +16,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-
-  static TextStyle bottomStyle = TextStyle(fontSize: SizeConfig.blockSizeVertical * 2.0, fontWeight: FontWeight.normal);
 
   static const List<Widget> _widgetOptions = <Widget>[
     Paying(),
@@ -77,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     for (Coin coin in Coin.values) {
-      appData.images[coin] = Image.asset('assets/euros/${describeEnum(coin)}.png');
+      appData.images[coin] = Image.asset('assets/euros/${coin.name}.png');
     }
   }
 
