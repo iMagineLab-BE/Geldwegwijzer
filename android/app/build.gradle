@@ -61,7 +61,7 @@ android {
     defaultConfig {
         applicationId "club.imaginelab.geldwegwijzer"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 35
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
