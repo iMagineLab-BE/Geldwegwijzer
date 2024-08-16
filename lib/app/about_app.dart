@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:geldwegwijzer/model/sizeconfig.dart';
 import 'package:package_info/package_info.dart';
 
-Future<void> openAboutApp(BuildContext context) async {
-  bool isHorizontal = SizeConfig.screenWidth > SizeConfig.screenHeight;
+Future<void> openAboutApp(final BuildContext context) async {
+  final bool isHorizontal = SizeConfig.screenWidth > SizeConfig.screenHeight;
   String appName;
   String appVersion;
-  List<Widget> children = <Widget>[
+  final List<Widget> children = <Widget>[
     SizedBox(height: SizeConfig.blockSizeVertical * 4.0),
     Text('In samenwerking met',
         textAlign: TextAlign.center,
@@ -36,7 +36,7 @@ Future<void> openAboutApp(BuildContext context) async {
             width: isHorizontal
                 ? SizeConfig.blockSizeHorizontal * 20.0
                 : SizeConfig.blockSizeHorizontal * 30.0),
-        Spacer()
+        const Spacer()
       ],
     )
   ];
@@ -45,7 +45,7 @@ Future<void> openAboutApp(BuildContext context) async {
     appName = 'Geldwegwijzer';
     appVersion = '2.0.5';
   } else {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     appName = packageInfo.appName;
     appVersion =
@@ -55,14 +55,12 @@ Future<void> openAboutApp(BuildContext context) async {
   showDialog(
     context: context,
     useRootNavigator: true,
-    builder: (BuildContext context) {
+    builder: (final BuildContext context) {
       return _AboutDialog(
           context,
           appName,
           appVersion,
-          'Copyright © 2017-' +
-              DateTime.now().year.toString() +
-              ' iMagineLab - All rights reserved.',
+          'Copyright © 2017-${DateTime.now().year} iMagineLab - All rights reserved.',
           Image.asset('assets/icon.png',
               width: isHorizontal
                   ? SizeConfig.blockSizeVertical * 20.0

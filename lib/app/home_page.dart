@@ -6,7 +6,7 @@ import 'package:geldwegwijzer/app/paying.dart';
 import 'package:geldwegwijzer/model/sizeconfig.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({required this.title});
+  const MyHomePage({required this.title});
 
   final String title;
 
@@ -22,22 +22,22 @@ class _MyHomePageState extends State<MyHomePage> {
     MoneyGrid(),
   ];
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(final int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: FittedBox(
+        title: const FittedBox(
+            fit: BoxFit.scaleDown,
             child: Text(
               'Geldwegwijzer',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
-            fit: BoxFit.scaleDown),
+            )),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.info),
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    for (Coin coin in Coin.values) {
+    for (final Coin coin in Coin.values) {
       appData.images[coin] = Image.asset('assets/euros/${coin.name}.png');
     }
   }
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    for (Image image in appData.images.values) {
+    for (final Image image in appData.images.values) {
       precacheImage(image.image, context);
     }
   }

@@ -109,8 +109,8 @@ class KeyboardButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 0.5, horizontal: SizeConfig.blockSizeHorizontal * 0.5),
         child: ElevatedButton(
           style: ButtonStyle(
-            elevation: const MaterialStatePropertyAll(3),
-            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+            elevation: const WidgetStatePropertyAll(3),
+            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(isHorizontal() ? SizeConfig.blockSizeHorizontal * 2.0 : SizeConfig.blockSizeHorizontal * 3.0),
             )),
             backgroundColor: const MaterialStatePropertyAll(Colors.green),

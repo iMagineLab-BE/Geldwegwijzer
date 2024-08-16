@@ -66,11 +66,11 @@ class PayingState extends State {
             SizedBox(height: SizeConfig.blockSizeVertical * 2.0),
             ElevatedButton(
               style: ButtonStyle(
-                elevation: const MaterialStatePropertyAll(3),
-                foregroundColor: const MaterialStatePropertyAll(Colors.white),
-                backgroundColor: const MaterialStatePropertyAll(Colors.green),
-                padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0)),
-                shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                elevation: const WidgetStatePropertyAll(3),
+                foregroundColor: const WidgetStatePropertyAll(Colors.white),
+                backgroundColor: const WidgetStatePropertyAll(Colors.green),
+                padding: WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0)),
+                shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
                 )),
               ),
@@ -107,11 +107,11 @@ class PayingState extends State {
             SizedBox(width: SizeConfig.blockSizeHorizontal * 2.0),
             ElevatedButton(
               style: ButtonStyle(
-                elevation: const MaterialStatePropertyAll(3),
-                foregroundColor: const MaterialStatePropertyAll(Colors.white),
-                backgroundColor: const MaterialStatePropertyAll(Colors.green),
-                padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0)),
-                shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                elevation: const WidgetStatePropertyAll(3),
+                foregroundColor: const WidgetStatePropertyAll(Colors.white),
+                backgroundColor: const WidgetStatePropertyAll(Colors.green),
+                padding: WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2.0, horizontal: SizeConfig.blockSizeHorizontal * 4.0)),
+                shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(SizeConfig.blockSizeVertical * 3),
                 )),
               ),

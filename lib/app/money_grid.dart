@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geldwegwijzer/model/app_data.dart';
 import 'package:geldwegwijzer/model/sizeconfig.dart';

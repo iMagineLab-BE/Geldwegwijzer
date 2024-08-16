@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Geldwegwijzer',
       theme: ThemeData(
+        useMaterial3: false,
         primarySwatch: Colors.green,
         appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle(
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: MyHomePage(title: 'Geldwegwijzer'),
+      home: const MyHomePage(title: 'Geldwegwijzer'),
     );
   }
 }
