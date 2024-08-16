@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geldwegwijzer/model/sizeconfig.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 Future<void> openAboutApp(final BuildContext context) async {
   final bool isHorizontal = SizeConfig.screenWidth > SizeConfig.screenHeight;
@@ -41,16 +41,11 @@ Future<void> openAboutApp(final BuildContext context) async {
     )
   ];
 
-  if (kIsWeb) {
-    appName = 'Geldwegwijzer';
-    appVersion = '2.0.5';
-  } else {
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-    appName = packageInfo.appName;
-    appVersion =
-        '${packageInfo.version} (Build: ${packageInfo.buildNumber})';
-  }
+  appName = packageInfo.appName;
+  appVersion =
+      '${packageInfo.version} (Build: ${packageInfo.buildNumber})';
 
   showDialog(
     context: context,
