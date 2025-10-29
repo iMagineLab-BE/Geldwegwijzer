@@ -40,6 +40,7 @@ if (flutterVersionName == null) {
 }
 
 android {
+    namespace = 'club.imaginelab.geldwegwijzer'
     compileSdkVersion 36
 
     compileOptions {
@@ -57,7 +58,7 @@ android {
 
     defaultConfig {
         applicationId "club.imaginelab.geldwegwijzer"
-        minSdkVersion 21
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
